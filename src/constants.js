@@ -1,0 +1,1 @@
+export const DEFAULT_DISTANCE_FROM_USER = 1.5;

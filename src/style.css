@@ -1,0 +1,33 @@
+html,
+body,
+#root {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.a-dialog-allow-button {
+    background-color: #FFD200 !important;
+    color: #ffffff !important;
+}
+
+.a-dialog-deny-button {
+    background-color: #EC1C24 !important;
+    color: #ffffff !important;
+}
+
+.a-dialog-ok-button {
+    background-color: #FFD200 !important;
+    color: #ffffff !important;
+}
+
+.a-loading-screen {
+    background: #FFD200; /* Background color */
+    color: #ffffff; /* Text color */
+  }
+  .a-loading-screen .spinner {
+    border-color: #ffffff transparent transparent transparent; /* Spinner colors */
+  }
