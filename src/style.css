@@ -9,6 +9,31 @@ body,
     overflow: hidden;
 }
 
+/* Ensure A-Frame scene has transparent background */
+.a-canvas {
+    background: transparent !important;
+}
+
+/* Camera background container styling */
+#camera-background-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: -1;
+    overflow: hidden;
+}
+
+#camera-background-container video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
 .a-dialog-allow-button {
     background-color: #FFD200 !important;
     color: #ffffff !important;

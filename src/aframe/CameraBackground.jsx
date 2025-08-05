@@ -7,8 +7,6 @@ AFRAME.registerComponent('camera-background', {
 
   init: function () {
     this.video = null;
-    this.texture = null;
-    this.material = null;
     this.isMobile = this.isMobileDevice();
     this.isSecure = window.location.protocol === 'https:';
     
@@ -16,9 +14,9 @@ AFRAME.registerComponent('camera-background', {
     this.el.sceneEl.addEventListener('loaded', () => {
       if (this.isMobile) {
         if (!this.isSecure) {
-          console.log('Camera access requires HTTPS. Using fallback skybox.');
+          console.log('Camera access requires HTTPS. Using fallback background.');
           this.showHttpsMessage();
-          this.fallbackToSkybox();
+          this.fallbackToImage();
         } else {
           // Small delay to ensure scene is fully loaded
           setTimeout(() => {
@@ -27,7 +25,7 @@ AFRAME.registerComponent('camera-background', {
         }
       } else {
         console.log('Camera background only works on mobile devices');
-        this.fallbackToSkybox();
+        this.fallbackToImage();
       }
     });
   },
@@ -70,38 +68,46 @@ AFRAME.registerComponent('camera-background', {
 
         this.video.addEventListener('error', (error) => {
           console.error('Error accessing camera:', error);
-          this.fallbackToSkybox();
+          this.fallbackToImage();
         });
       })
       .catch(error => {
         console.error('Error accessing camera:', error);
-        // Fallback to original skybox if camera access fails
-        this.fallbackToSkybox();
+        // Fallback to image background if camera access fails
+        this.fallbackToImage();
       });
   },
 
   createBackground: function () {
-    // Create a video texture
-    this.texture = new THREE.VideoTexture(this.video);
-    this.texture.minFilter = THREE.LinearFilter;
-    this.texture.magFilter = THREE.LinearFilter;
-    this.texture.format = THREE.RGBFormat;
+    // Create a background container if it doesn't exist
+    let backgroundContainer = document.getElementById('camera-background-container');
+    if (!backgroundContainer) {
+      backgroundContainer = document.createElement('div');
+      backgroundContainer.id = 'camera-background-container';
+      backgroundContainer.style.cssText = `
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        z-index: -1;
+        overflow: hidden;
+      `;
+      document.body.appendChild(backgroundContainer);
+    }
 
-    // Create material with video texture
-    this.material = new THREE.MeshBasicMaterial({
-      map: this.texture,
-      side: THREE.BackSide
-    });
+    // Style the video element
+    this.video.style.cssText = `
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      position: absolute;
+      top: 0;
+      left: 0;
+    `;
 
-    // Create a large sphere to act as the background
-    const geometry = new THREE.SphereGeometry(500, 60, 40);
-    const mesh = new THREE.Mesh(geometry, this.material);
-    
-    // Add to scene
-    this.el.sceneEl.object3D.add(mesh);
-    
-    // Store reference for cleanup
-    this.backgroundMesh = mesh;
+    // Add video to background container
+    backgroundContainer.appendChild(this.video);
     
     // Hide the original skybox when camera is active
     const sky = this.el.sceneEl.querySelector('a-sky');
@@ -110,8 +116,27 @@ AFRAME.registerComponent('camera-background', {
     }
   },
 
-  fallbackToSkybox: function () {
-    console.log('Falling back to original skybox');
+  fallbackToImage: function () {
+    console.log('Falling back to image background');
+    
+    // Create a background container if it doesn't exist
+    let backgroundContainer = document.getElementById('camera-background-container');
+    if (!backgroundContainer) {
+      backgroundContainer = document.createElement('div');
+      backgroundContainer.id = 'camera-background-container';
+      backgroundContainer.style.cssText = `
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        z-index: -1;
+        overflow: hidden;
+        background: url('panorama4k.png') center center / cover no-repeat;
+      `;
+      document.body.appendChild(backgroundContainer);
+    }
+
     // Show the original skybox if camera access fails
     const sky = this.el.sceneEl.querySelector('a-sky');
     if (sky) {
@@ -130,13 +155,6 @@ AFRAME.registerComponent('camera-background', {
     this.el.sceneEl.appendChild(message);
   },
 
-  tick: function () {
-    // Update video texture if it exists
-    if (this.texture && this.video && this.video.readyState === this.video.HAVE_ENOUGH_DATA) {
-      this.texture.needsUpdate = true;
-    }
-  },
-
   remove: function () {
     // Cleanup
     if (this.video && this.video.srcObject) {
@@ -144,14 +162,10 @@ AFRAME.registerComponent('camera-background', {
       tracks.forEach(track => track.stop());
     }
     
-    if (this.backgroundMesh) {
-      this.el.sceneEl.object3D.remove(this.backgroundMesh);
-      this.backgroundMesh.geometry.dispose();
-      this.backgroundMesh.material.dispose();
-    }
-    
-    if (this.texture) {
-      this.texture.dispose();
+    // Remove background container
+    const backgroundContainer = document.getElementById('camera-background-container');
+    if (backgroundContainer) {
+      document.body.removeChild(backgroundContainer);
     }
   }
 }); 

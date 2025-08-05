@@ -40,7 +40,9 @@ export function App() {
 
   return (
     <>
-      <a-scene loading-screen="dotsColor: #FFD200; backgroundColor: #EC1C24" camera-background>
+      <a-scene loading-screen="dotsColor: #FFD200; backgroundColor: #EC1C24" 
+               camera-background
+               renderer="alpha: true">
         <a-camera look-controls="reverseMouseDrag: true" wasd-controls-enabled="false" position="0 0 0"></a-camera>
         <a-entity id="raycaster" raycaster="objects: .clickable" cursor="rayOrigin: mouse"></a-entity>
 
