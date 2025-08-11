@@ -2,6 +2,10 @@ import 'aframe';
 import React, { useState, useEffect } from 'react';
 import ImageGallery from './components/ImageGallery.jsx';
 import VideoGallery from './components/VideoGallery.jsx';
+import Station0 from './components/Station0.jsx';
+import Station1 from './components/Station1.jsx';
+import Station2 from './components/Station2.jsx';
+import Station3 from './components/Station3.jsx';
 import './aframe/ScaleAnimator.jsx';
 import './aframe/HoverAnimator.jsx';
 import './aframe/GLTFMaterialFix.jsx';
@@ -13,6 +17,48 @@ export function App() {
   const [showPanelist, setShowPanelists] = useState(false);
   const [started, setStarted] = useState(false);
   const [showCharacteristics, setShowCharacteristics] = useState(false);
+  
+  // Station visibility state
+  const [currentStation, setCurrentStation] = useState(-1); // -1 for none, 0, 1, 2, 3
+  const [stationsVisible, setStationsVisible] = useState({
+    0: false,  // center - hidden
+    1: false,  // left - hidden
+    2: false,  // right - hidden
+    3: false   // front - hidden
+  });
+
+  // Station management functions
+  const nextStation = () => {
+    let next;
+    if (currentStation === -1) {
+      next = 0; // Start with first station if all are hidden
+    } else {
+      next = (currentStation + 1) % 7;
+    }
+    setCurrentStation(next);
+    
+    // Hide all stations first
+    setStationsVisible({
+      0: false,
+      1: false, 
+      2: false,
+      3: false,
+      4: false,
+      5: false,
+      6: false,
+      7: false,
+    });
+    
+    // Show only the next station
+    setStationsVisible(prev => ({
+      ...prev,
+      [next]: true
+    }));
+  };
+
+
+
+
 
   // Suppress WebGL warnings
   useEffect(() => {
@@ -72,12 +118,52 @@ export function App() {
 
   return (
     <>
+            {/* Station Control UI */}
+      {started && <div style={{
+        position: 'fixed',
+        bottom: '20px',
+        left: '50%',
+        transform: 'translateX(-50%)',
+        zIndex: 1000,
+        background: 'rgba(0,0,0,0.9)',
+        padding: '20px',
+        borderRadius: '15px',
+        color: 'white',
+        fontFamily: 'Arial, sans-serif',
+        minWidth: '280px',
+        textAlign: 'center',
+        boxShadow: '0 4px 20px rgba(0,0,0,0.3)'
+      }}>
+        <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '15px' }}>
+          <button 
+            onClick={nextStation}
+            style={{
+              background: currentStation === 0 ? '#FFD200' : '#333',
+              color: currentStation === 0 ? '#000' : '#fff',
+              border: 'none',
+              padding: '12px 24px',
+              borderRadius: '25px',
+              cursor: 'pointer',
+              fontSize: '16px',
+              fontWeight: 'bold',
+              minWidth: '120px',
+              transition: 'all 0.2s ease'
+            }}
+          >
+            Next Station
+          </button>
+        </div>
+        <div style={{ fontSize: '14px', opacity: 0.9 }}>
+          <div>Current Station: {currentStation === -1 ? 'None' : currentStation + 1}</div>
+        </div>
+      </div>
+    }
       <a-scene loading-screen="dotsColor: #FFD200; backgroundColor: #EC1C24" 
                renderer="alpha: true; antialias: true; colorManagement: true; precision: mediump"
                onerror="console.error('A-Frame error:', event.detail)"
                embedded="true"
                webgl="antialias: true; alpha: true; depth: true; stencil: true; preserveDrawingBuffer: false; logarithmicDepthBuffer: false">
-        <a-camera look-controls="reverseMouseDrag: true" wasd-controls-enabled="false" position="0 0 0"></a-camera>
+        <a-camera look-controls="reverseMouseDrag: true; mouseEnabled: true; touchEnabled: true" wasd-controls-enabled="false" position="0 0 0"></a-camera>
         <a-entity id="raycaster" raycaster="objects: .clickable" cursor="rayOrigin: mouse"></a-entity>
 
         {/* Load assets */}
@@ -116,78 +202,12 @@ export function App() {
           <img id="prev" src="prev.png" crossOrigin="anonymous" preload="auto" />
           <img id="close" src="close.png" crossOrigin="anonymous" preload="auto" />
           <img id="date" src="date.png" crossOrigin="anonymous" preload="auto" />
-          <video id="video" src="SHELL V Power.mp4" autoPlay={false} loop={false} preload="metadata"></video>
+          <video id="video" src="video.mp4" autoPlay={false} loop={false} preload="metadata" style={{background: 'transparent'}}></video>
           <audio src="bienvenida.wav" preload="auto"></audio>
         </a-assets>
 
         {/* Sky with panorama - fallback when camera is not available */}
         <a-sky src="#panorama" material="shader: flat"></a-sky>
-
-
-        {/* {started && <a-plane
-          class="clickable"
-          src="#date"
-          position={`0.04 -0.2 -${DEFAULT_DISTANCE_FROM_USER}`}
-          rotation="0 0 0"
-          scale="1.4 0.2 1.4"
-          transparent="true"
-          material="shader: flat"
-          onClick={() => { window.open('https://maps.app.goo.gl/iwQ4uWfBv2cank8i9?g_st=com.google.maps.preview.copy', '_blank'); }}
-        ></a-plane>} */}
-
-        {started && (
-          <a-entity position={`0 -0.45 -${DEFAULT_DISTANCE_FROM_USER - 0.1}`}>
-            <a-plane
-              src="#celular-instrucciones"
-              position="0 -0.2 0"
-              transparent="true"
-              scale="0.5 0.1 0.1"
-              material="shader: flat"
-            >
-            </a-plane>
-            <a-plane
-              src="#celular-flechas"
-              position="0 0 0"
-              transparent="true"
-              scale="0.3 0.05 0.1"
-              material="shader: flat"
-            >
-            </a-plane>
-            <a-entity
-              position="0 0 0.08"
-              animation="property: rotation; from: 0 -45 0; to: 0 45 0; dur: 2000; easing: easeInOutQuad; loop: true; dir: alternate;"
-            >
-              <a-plane
-                src="#celular"
-                position="0 0 -0.05"
-                transparent="true"
-                scale="0.1 0.2 0.1"
-                material="shader: flat"
-              >
-              </a-plane>
-            </a-entity>
-          </a-entity>
-        )}
-
-        {started && <a-entity
-          id="logo-model"
-          hover-animator="duration: 2000; easing: easeInOutQuad;"
-          position={`0 0.15 -${DEFAULT_DISTANCE_FROM_USER}`}
-          scale="1 1 1"
-        >
-          <a-entity
-            gltf-model="02-vpower.glb"
-            position="0 0 0"
-            rotation="90 0 0"
-            scale="0.4 0.4 0.4"
-          ></a-entity>
-          <a-entity
-            gltf-model="01-logo.glb"
-            position="0 0.5 0"
-            rotation="90 0 0"
-            scale="0.1 0.1 0.1"
-          ></a-entity>
-        </a-entity>}
 
         <a-plane
           class="clickable"
@@ -207,332 +227,28 @@ export function App() {
             var button = new Audio('boton.wav');
             button.play();
             e.target.setAttribute("scale", "0 0 0")
+            nextStation();
           }}
         ></a-plane>
 
+        {started && stationsVisible[0] && <Station0 position={`0 -0.45 -${DEFAULT_DISTANCE_FROM_USER - 0.1}`} />}
 
-        <a-entity
-          id="logo-model"
-          hover-animator="duration: 2000; easing: easeInOutQuad;"
-          position={`-${DEFAULT_DISTANCE_FROM_USER + 0.1} 0.75 0`}
-          scale="1 1 1"
-        >
-          <a-entity
-            gltf-model="FerrariMaya.glb"
-            position="0 -1.1 0"
-            scale="0.25 0.25 0.25"
-            gltf-material-fix="color: #FFF;"
-            animation="property: rotation; to: 0 -360 0; dur: 15000; easing: linear; loop: true; autoplay: true"
-          ></a-entity>
-        </a-entity>
+        {stationsVisible[1] && <Station1 position={`0 0 -${DEFAULT_DISTANCE_FROM_USER}`} />}
 
-        {/* {!showPanelist && <a-entity
-          position={`-${DEFAULT_DISTANCE_FROM_USER + 0.1} 0.75 0`}
-          rotation="0 90 0"
-          scale="1 0.75 1"
-          scale-animator="duration: 500; easing: easeInOutCubic"
-        >
-          <a-plane
-            class="clickable"
-            src="#panelists-button"
-            position="0 -0.125 0"
-            scale="1 0.6 1"
-            transparent="true"
-            material="shader: flat"
-            onClick={openPanelists}
-          ></a-plane>
-          {content.panelists.map((panelist, index) => (
-            <a-plane
-              key={panelist.id}
-              src={`#${panelist.id}`}
-              class="clickable"
-              position={`${-0.322 + (index % 3) * 0.3} -${0.8 + (Math.floor(index / 3) * 0.6)} ${0 + index * 0.01}`}
-              scale="0.35 0.5 1"
-              transparent="true"
-              material="shader: flat"
-              onClick={openPanelists}
-              hover-animator={`direction: ${index === 0 || index === 3 ? 'left': (index === 2 || index === 5 ? 'right' : (index === 1 ? 'up' : 'down'))}; duration: 2000; easing: easeInOutQuad;`}
-            ></a-plane>
-          ))}
-          <a-plane
-            src="#panelists-text"
-            class="clickable"
-            position="0 -1.9 0"
-            scale="1 0.2 1"
-            transparent="true"
-            material="shader: flat"
-            onClick={openPanelists}
-          ></a-plane>
-        </a-entity>}
+        {started && stationsVisible[2] && <Station2 position={`0 -0.5 -${DEFAULT_DISTANCE_FROM_USER}`} />}
 
-        {showPanelist && <VideoGallery
-          videos={content.videos}
-          titleSrc="#panelistas-video-titulo"
-          position={`-${DEFAULT_DISTANCE_FROM_USER} 0 0`}
-          rotation="0 90 0"
-          scale="1 1 1"
-          closeFunction={() => setShowPanelists(false)} />} */}
 
-        {/* Video Principal */}
 
-        <VideoGallery
-          videos={[{ src: "#video", autoplay: false }]}
-          titleSrc="#video-titulo"
-          titleSrcScale = "0.5 0.3 0.5"
-          position={`${DEFAULT_DISTANCE_FROM_USER} 0 0`}
-          rotation="0 -90 0"
-          scale="1 1 1" />
-
-        {!showCharacteristics && <a-entity
-          class="clickable"
-
-          position={`0 -0.25 ${DEFAULT_DISTANCE_FROM_USER + 0.1}`}
-          rotation="0 180 0"
-          scale="1 0.7 1"
-          onClick={openCharacteristics}
-          scale-animator="duration: 500; easing: easeInOutCubic"
-        >
-          <a-plane
-          class="clickable"
-          src="#characteristics-button"
-          position="0 0.1 0"
-          scale="1 0.7 1"
-          transparent="true"
-          material="shader: flat"
-          onClick={openCharacteristics}
-        ></a-plane>
-          <a-plane
-            src="#characteristics-title"
-            class="clickable"
-            position="-0.01 1.2 0"
-            scale="1.1 0.28 0.3"
-            transparent="true"
-            material="shader: flat"
-            onClick={openCharacteristics}
-          ></a-plane>
-          <a-plane
-            src="#characteristics-1"
-            class="clickable"
-            position="-0.4 0.75 0"
-            scale="0.2 0.5 1"
-            transparent="true"
-            material="shader: flat"
-            onClick={openCharacteristics}
-          ></a-plane>
-          {/* <a-plane
-            src="#characteristics-arrow"
-            class="clickable"
-            hover-animator="duration: 2000; easing: easeInOutQuad;"
-            position="-0.4 1.10 0.01"
-            scale="0.2 0.22 1"
-            transparent="true"
-            material="shader: flat"
-            onClick={openCharacteristics}
-          ></a-plane> */}
-          {/*<a-plane
-            src="#characteristics-background"
-            class="clickable"
-            position="0 1 -1"
-            scale="2 3 2"
-            transparent="true"
-            material="shader: flat"
-            onClick={openCharacteristics}
-          ></a-plane>*/}
-          <a-plane
-            src="#characteristics-2"
-            class="clickable"
-            position="-0.1325 0.75 0"
-            scale="0.2 0.5 1"
-            transparent="true"
-            material="shader: flat"
-            onClick={openCharacteristics}
-          ></a-plane>
-          {/* <a-plane
-            src="#characteristics-arrow"
-            class="clickable"
-            hover-animator="duration: 2000; easing: easeInOutQuad;"
-            position="-0.1325 1.10 0.01"
-            scale="0.2 0.22 1"
-            transparent="true"
-            material="shader: flat"
-            onClick={openCharacteristics}
-          ></a-plane> */}
-          <a-plane
-            src="#characteristics-3"
-            class="clickable"
-            position="0.1325 0.75 0"
-            scale="0.2 0.5 1"
-            transparent="true"
-            material="shader: flat"
-            onClick={openCharacteristics}
-          ></a-plane>
-          {/* <a-plane
-            src="#characteristics-arrow"
-            class="clickable"
-            hover-animator="duration: 2000; easing: easeInOutQuad;"
-            position="0.1325 1.10 0.01"
-            scale="0.2 0.22 1"
-            transparent="true"
-            material="shader: flat"
-            onClick={openCharacteristics}
-          ></a-plane> */}
-          <a-plane
-            src="#characteristics-4"
-            class="clickable"
-            position="0.4 0.75 0"
-            scale="0.2 0.5 1"
-            transparent="true"
-            material="shader: flat"
-            onClick={openCharacteristics}
-          ></a-plane>
-          {/* <a-plane
-            src="#characteristics-arrow"
-            class="clickable"
-            hover-animator="duration: 2000; easing: easeInOutQuad;"
-            position="0.4 1.10 0.01"
-            scale="0.2 0.22 1"
-            transparent="true"
-            material="shader: flat"
-            onClick={openCharacteristics}
-          ></a-plane> */}
-        </a-entity>}
+        {!showCharacteristics && stationsVisible[3] && <Station3 showCharacteristics={showCharacteristics} openCharacteristics={openCharacteristics} position={`0 -0.25 -${DEFAULT_DISTANCE_FROM_USER}`} />}
 
         {showCharacteristics && <ImageGallery
           id='gallery-1'
           images={content.images.map(image => `#${image.id}`)}
           audios={content.audios.map(audio => `${audio.src}`)}
-          position={`0 0 ${DEFAULT_DISTANCE_FROM_USER}`}
-          rotation="0 180 0"
+          position={`0 0 -${DEFAULT_DISTANCE_FROM_USER}`}
+          rotation="0 0 0"
           closeFunction={() => setShowCharacteristics(false)}
         />}
-
-        {/* Ambient Elements */}
-        {/* <a-plane
-          src="#ambient1"
-          transparent="true"
-          position="0.5 1 2"
-          rotation="0 180 0"
-          scale="0.25 0.25 0.25"
-          material="shader: flat"
-          animation="property: position; to: -2 1 1; dur: 15000; easing: easeInOutQuad; loop: true; dir: alternate;"
-        ></a-plane>
-        <a-plane
-          src="#ambient2"
-          transparent="true"
-          position="-2 1 -1"
-          rotation="0 90 0"
-          scale="0.25 0.25 0.25"
-          material="shader: flat"
-          animation="property: position; to: -1 1 -1; dur: 15000; easing: easeInOutQuad; loop: true; dir: alternate;"
-        ></a-plane>
-        <a-plane
-          src="#ambient1"
-          transparent="true"
-          position="1 1 -2"
-          rotation="0 0 0"
-          scale="0.25 0.25 0.25"
-          material="shader: flat"
-          animation="property: position; to: 3 1 -1; dur: 15000; easing: easeInOutQuad; loop: true; dir: alternate;"
-        ></a-plane>
-        <a-plane
-          src="#ambient2"
-          transparent="true"
-          position="-3 2 -2"
-          rotation="0 0 0"
-          scale="0.25 0.25 0.25"
-          material="shader: flat"
-          animation="property: position; to: 0 1 -2; dur: 15000; easing: easeInOutQuad; loop: true; dir: alternate;"
-        ></a-plane>
-        <a-plane
-          src="#ambient3"
-          transparent="true"
-          position="-2 0.5 -3"
-          rotation="0 0 0"
-          scale="0.25 0.247 0.25"
-          material="shader: flat"
-          animation="property: position; to: -0.5 -1 -1; dur: 15000; easing: easeInOutQuad; loop: true; dir: alternate;"
-        ></a-plane>
-        <a-plane
-          src="#evolucion"
-          transparent="true"
-          position="2 -1 -1"
-          rotation="0 -45 0"
-          scale="0.7 0.15 0.7"
-          material="shader: flat"
-          animation="property: position; to: 1.2 0 -2; dur: 15000; easing: easeInOutQuad; loop: true; dir: alternate;"
-        ></a-plane>
-         <a-plane
-          src="#evolucionshell"
-          transparent="true"
-          position="2 -1 -1"
-          rotation="0 -45 0"
-          scale="0.7 0.15 0.7"
-          material="shader: flat"
-          animation="property: position; to: -1.2 -1 -2; dur: 15000; easing: easeInOutQuad; loop: true; dir: alternate;"
-        ></a-plane>
-        <a-plane
-          src="#ambient3"
-          transparent="true"
-          position="2 1 1"
-          rotation="0 -135 0"
-          scale="0.25 0.247 0.25"
-          material="shader: flat"
-          animation="property: position; to: 1 0.5 1; dur: 15000; easing: easeInOutQuad; loop: true; dir: alternate;"
-        ></a-plane>
-        <a-plane
-          src="#agil"
-          transparent="true"
-          position="1 0 1"
-          rotation="0 -90 0"
-          scale="0.7 0.25 0.7"
-          material="shader: flat"
-          animation="property: position; to: 3 -1 1; dur: 15000; easing: easeInOutQuad; loop: true; dir: alternate;"
-        ></a-plane>
-        <a-plane
-          src="#simple"
-          transparent="true"
-          position="2 -1.2 -0.5"
-          rotation="0 -90 0"
-          scale="0.7 0.7 0.7"
-          material="shader: flat"
-          animation="property: position; to: 2 -1.2 1; dur: 15000; easing: easeInOutQuad; loop: true; dir: alternate;"
-        ></a-plane>
-        <a-plane
-          src="#ambient3"
-          transparent="true"
-          position="-2 -1 1"
-          rotation="0 -225 0"
-          scale="0.25 0.247 0.25"
-          material="shader: flat"
-          animation="property: position; to: -1 0 1; dur: 15000; easing: easeInOutQuad; loop: true; dir: alternate;"
-        ></a-plane>
-        <a-plane
-          src="#ambient2"
-          transparent="true"
-          position="-1 1 2"
-          rotation="0 -225 0"
-          scale="0.2 0.2 0.2"
-          material="shader: flat"
-          animation="property: position; to: -1 -1 1; dur: 15000; easing: easeInOutQuad; loop: true; dir: alternate;"
-        ></a-plane>
-        <a-plane
-          src="#impacto"
-          transparent="true"
-          position="2 -1.5 2"
-          rotation="0 180 0"
-          scale="0.588 0.2 0.588"
-          material="shader: flat"
-          animation="property: position; to: 0 -1 2; dur: 15000; easing: easeInOutQuad; loop: true; dir: alternate;"
-        ></a-plane>
-        <a-plane
-          src="#ambient1"
-          transparent="true"
-          position="-3 -3 -2"
-          rotation="0 90 0"
-          scale="0.4 0.4 0.4"
-          material="shader: flat"
-          animation="property: position; to: -3 -1 -2; dur: 15000; easing: easeInOutQuad; loop: true; dir: alternate;"
-        ></a-plane> */}
       </a-scene>
     </>
   );

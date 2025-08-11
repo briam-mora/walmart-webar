@@ -34,6 +34,15 @@ body,
     left: 0;
 }
 
+/* Ensure video transparency in A-Frame */
+a-video {
+    background: transparent !important;
+}
+
+a-video video {
+    background: transparent !important;
+}
+
 .a-dialog-allow-button {
     background-color: #FFD200 !important;
     color: #ffffff !important;

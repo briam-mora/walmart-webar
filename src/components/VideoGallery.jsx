@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import 'aframe';
 
-const VideoGallery = ({ titleSrc, videos, position, rotation, scale, closeFunction, titleSrcScale = "0.9 0.18 1" }) => {
+const VideoGallery = ({ videos, position, rotation, scale, closeFunction, width, height }) => {
   const videoRef = useRef(null); // Reference to the video element
 
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -64,32 +64,25 @@ const VideoGallery = ({ titleSrc, videos, position, rotation, scale, closeFuncti
       rotation={rotation}
       scale={scale}
     >
-      <a-plane
-        src={titleSrc}
-        position="0 0.95 0"
-        scale={titleSrcScale}
-        transparent="true"
-        material="shader: flat"
-        scale-animator="duration: 500; easing: easeInOutCubic"
-        hover-animator="duration: 2000; easing: easeInOutQuad; distance: 0.02"
-      ></a-plane>
 
       {/* Video */}
       <a-video
         class={videos[currentIndex].autoPlay ? "" : "clickable"}
         src={videos[currentIndex].src}
-        width="9"
-        height="16"
+        width={width}
+        height={height}
         position="0 0 0"
         scale-animator="duration: 500; easing: easeInOutCubic"
         onClick={handleVideoClick}
         scale="0.1 0.1 0.1"
+        transparent="true"
+        material="shader: flat; transparent: true; alphaTest: 0.1"
       ></a-video>
 
       {!playing && <a-plane
         position="0 0 0.01"
         opacity="0.5"
-        scale="0.9 1.6 1"
+        scale="0.794 1.08 1"
       ></a-plane>}
       {!playing && <a-plane
         src="#play-button"
