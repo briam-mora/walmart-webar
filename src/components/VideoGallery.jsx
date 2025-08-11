@@ -79,17 +79,14 @@ const VideoGallery = ({ videos, position, rotation, scale, closeFunction, width,
         material="shader: flat; transparent: true; alphaTest: 0.1"
       ></a-video>
 
-      {!playing && <a-plane
-        position="0 0 0.01"
-        opacity="0.5"
-        scale="0.794 1.08 1"
-      ></a-plane>}
+      {/* Play Button (only when video is not playing) */}
       {!playing && <a-plane
         src="#play-button"
-        position="0 0 0.02"
+        position="0 0 0.01"
         transparent="true"
         scale="0.2 0.2 0.2"
         scale-animator="duration: 500; easing: easeInOutCubic"
+        material="shader: flat"
       ></a-plane>}
 
       {/* Navigation Buttons */}
@@ -101,7 +98,7 @@ const VideoGallery = ({ videos, position, rotation, scale, closeFunction, width,
               key={index}
               position={`${index * 0.1 - ((videos.length - 1) * 0.1) / 2} 0 0`}
               radius="0.02"
-              color={index === currentIndex ? '#2D387F' : '#9BD7E1'}
+              color={index === currentIndex ? '#ffc21f' : '#75b52a'}
             ></a-circle>
           ))}
         </a-entity>

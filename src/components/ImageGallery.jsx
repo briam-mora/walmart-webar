@@ -7,7 +7,6 @@ const ImageGallery = ({ images, audios, position, rotation, closeFunction }) => 
   // Handlers for navigation
   const handleNext = () => {
     var audio = new Audio('click.wav');
-    // if (audios) audio = new Audio(audios[currentIndex + 1]);
     audio.play();
     setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length);
   };
@@ -18,80 +17,78 @@ const ImageGallery = ({ images, audios, position, rotation, closeFunction }) => 
     setCurrentIndex((prevIndex) => (prevIndex - 1 + images.length) % images.length);
   };
 
-  const handleClose = () => {
-    closeFunction();
+  // Get the 3 thumbnail images to show (current + next 2)
+  const getThumbnailImages = () => {
+    const thumbnails = [];
+    for (let i = 0; i < 3; i++) {
+      const index = (currentIndex + i) % images.length;
+      thumbnails.push({
+        src: images[index],
+        index: index,
+        isCurrent: i === 0
+      });
+    }
+    return thumbnails;
   };
 
   return (
     <>
       {currentIndex !== null && (
         <a-entity key={currentIndex} position={position} rotation={rotation}>
-          {/* Image Display */}
+          {/* Main Large Image Display */}
           <a-plane
             src={images[currentIndex]}
             position="0 0 0"
             rotation="0 0 0"
-            scale="1 1 1"
-            scale-animator="duration: 500; easing: easeInOutCubic"
+            scale="1.3 1.3 1.3"
             transparent="true"
             material="shader: flat"
           ></a-plane>
 
-          {/* Navigation Buttons */}
-          {images.length > 1 && <a-entity position="0 -0.7 0">
-            {/* Image Indicator Dots */}
-            <a-entity position="0 0.15 0">
-              {images.map((_, index) => (
-                <a-circle
-                  key={index}
-                  position={`${index * 0.1 - ((images.length - 1) * 0.1) / 2} 0 0`}
-                  radius="0.02"
-                  color={index === currentIndex ? '#FFD200' : '#EC1C24' }
-                ></a-circle>
-              ))}
+          {/* Navigation and Thumbnails */}
+          {images.length > 1 && (
+            <a-entity position="0 -0.7 0">
+              {/* Previous Button */}
+              <a-plane
+                src="#prev"
+                class="clickable"
+                position="-0.5 -0.1 0"
+                width="0.15"
+                height="0.15"
+                onClick={handlePrev}
+                transparent="true"
+                material="shader: flat"
+              ></a-plane>
+
+              {/* Next Button */}
+              <a-plane
+                src="#next"
+                class="clickable"
+                position="0.5 -0.1 0"
+                width="0.15"
+                height="0.15"
+                onClick={handleNext}
+                transparent="true"
+                material="shader: flat"
+              ></a-plane>
+
+              {/* Thumbnail Row - 3 images */}
+              <a-entity position="0 -0.1 0">
+                {getThumbnailImages().map((thumb, index) => (
+                  <a-plane
+                    key={thumb.index}
+                    src={thumb.src}
+                    position={`${(index - 1) * 0.25} 0 0`}
+                    width={thumb.isCurrent ? "0.22" : "0.18"}
+                    height={thumb.isCurrent ? "0.22" : "0.18"}
+                    transparent="true"
+                    material="shader: flat"
+                    class={thumb.isCurrent ? "current-thumbnail" : "thumbnail"}
+                  ></a-plane>
+                ))}
+              </a-entity>
             </a-entity>
-            {/* Previous Button */}
-            <a-plane
-              src="#prev"
-              class="clickable"
-              position="-0.2 0 0"
-              width="0.2"
-              height="0.2"
-              onClick={handlePrev}
-              scale-animator="duration: 500; easing: easeInOutCubic"
-              transparent="true"
-              material="shader: flat"
-            >
-            </a-plane>
-
-            {/* Next Button */}
-            <a-plane
-              src="#next"
-              class="clickable"
-              position="0.2 0 0"
-              width="0.2"
-              height="0.2"
-              onClick={handleNext}
-              scale-animator="duration: 500; easing: easeInOutCubic"
-              transparent="true"
-              material="shader: flat"
-            >
-            </a-plane>
-
-            {/* Close Button */}
-            <a-plane
-              src="#close"
-              class="clickable"
-              position="0 0 0"
-              width="0.1"
-              height="0.1"
-              onClick={handleClose}
-              scale-animator="duration: 500; easing: easeInOutCubic"
-              transparent="true"
-              material="shader: flat"
-            >
-            </a-plane>
-          </a-entity>}
+          )}
         </a-entity>
       )}
     </>

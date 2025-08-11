@@ -2,18 +2,11 @@ import React from 'react';
 import ImageGallery from './ImageGallery.jsx';
 import content from '../content.json';
 
-const Station3 = ({ position }) => {
-
+const Station5 = ({ position }) => {
   return (
-    <a-entity
-      id="station-3"
-      class="clickable"
-      position={position}
-      scale="1 1 1"
-      scale-animator="duration: 500; easing: easeInOutCubic"
-    >
+    <a-entity id="station-5" position={position} scale-animator="duration: 500; easing: easeInOutCubic">
       <ImageGallery
-          id='gallery-1'
+          id='gallery-2'
           images={content.images.map(image => `#${image.id}`)}
           audios={content.audios.map(audio => `${audio.src}`)}
       />
@@ -21,4 +14,4 @@ const Station3 = ({ position }) => {
   );
 };
 
-export default Station3;
+export default Station5;

@@ -43,6 +43,15 @@ a-video video {
     background: transparent !important;
 }
 
+/* Video component styling */
+.video-gallery {
+    background: transparent !important;
+}
+
+.video-gallery a-video {
+    background: transparent !important;
+}
+
 /* A-Frame Permission Dialog Styling */
 .a-dialog-allow-button,
 .a-dialog-allow-button:hover,

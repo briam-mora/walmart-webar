@@ -1,11 +1,13 @@
 import 'aframe';
 import React, { useState, useEffect } from 'react';
-import ImageGallery from './components/ImageGallery.jsx';
-import VideoGallery from './components/VideoGallery.jsx';
 import Station0 from './components/Station0.jsx';
 import Station1 from './components/Station1.jsx';
 import Station2 from './components/Station2.jsx';
 import Station3 from './components/Station3.jsx';
+import Station4 from './components/Station4.jsx';
+import Station5 from './components/Station5.jsx';
+import Station6 from './components/Station6.jsx';
+import Station7 from './components/Station7.jsx';
 import './aframe/ScaleAnimator.jsx';
 import './aframe/HoverAnimator.jsx';
 import './aframe/GLTFMaterialFix.jsx';
@@ -92,18 +94,6 @@ export function App() {
     };
   }, []);
 
-  const openCharacteristics = () => {
-    var audio = new Audio('activacion_video.wav');
-    audio.play();
-    setShowCharacteristics(true)
-  }
-
-  const openPanelists = () => {
-    var audio = new Audio('activacion_video.wav');
-    audio.play();
-    setShowPanelists(true)
-  }
-
   useEffect(() => {
     const videoElement = document.querySelector('#video');
     if (videoElement) {
@@ -175,7 +165,7 @@ export function App() {
           {content.panelists.map(panelist => <img key={panelist.id} id={panelist.id} src={panelist.src} crossOrigin="anonymous" preload="auto" />)}
           <img id="light-arrow" src="icono.png" crossOrigin="anonymous" preload="auto" />
           <img id="play-button" src="play.png" crossOrigin="anonymous" preload="auto" />
-          <img id="pantalla-carga" src="shell_AR.png" crossOrigin="anonymous" preload="auto" />
+          <img id="pantalla-carga" src="walmart_start.png" crossOrigin="anonymous" preload="auto" />
           <img id="celular" src="celular.png" crossOrigin="anonymous" preload="auto" />
           <img id="celular-flechas" src="celular-flechas.png" crossOrigin="anonymous" preload="auto" />
           <img id="celular-instrucciones" src="celular-instrucciones.png" crossOrigin="anonymous" preload="auto" />
@@ -213,9 +203,9 @@ export function App() {
         <a-plane
           class="clickable"
           src="#pantalla-carga"
-          position={`0 0 -${DEFAULT_DISTANCE_FROM_USER - 0.1}`}
+          position={`0 0 -${DEFAULT_DISTANCE_FROM_USER}`}
           transparent="true"
-          scale="0.9 1.6 1"
+          scale="1 2 1"
           material="shader: flat"
           onClick={(e) => {
             setStarted(true);
@@ -238,18 +228,11 @@ export function App() {
 
         {started && stationsVisible[2] && <Station2 position={`0 -0.5 -${DEFAULT_DISTANCE_FROM_USER}`} />}
 
-
-
-        {!showCharacteristics && stationsVisible[3] && <Station3 showCharacteristics={showCharacteristics} openCharacteristics={openCharacteristics} position={`0 -0.25 -${DEFAULT_DISTANCE_FROM_USER}`} />}
-
-        {showCharacteristics && <ImageGallery
-          id='gallery-1'
-          images={content.images.map(image => `#${image.id}`)}
-          audios={content.audios.map(audio => `${audio.src}`)}
-          position={`0 0 -${DEFAULT_DISTANCE_FROM_USER}`}
-          rotation="0 0 0"
-          closeFunction={() => setShowCharacteristics(false)}
-        />}
+        {started && stationsVisible[3] && <Station3 position={`0 0.3 -${DEFAULT_DISTANCE_FROM_USER}`} />}
+        {started && stationsVisible[4] && <Station4 position={`0 0 -${DEFAULT_DISTANCE_FROM_USER}`} />}
+        {started && stationsVisible[5] && <Station5 position={`0 0.3 -${DEFAULT_DISTANCE_FROM_USER}`} />}
+        {started && stationsVisible[6] && <Station6 position={`0 0 -${DEFAULT_DISTANCE_FROM_USER}`} />}
+        {started && stationsVisible[7] && <Station7 position={`0 0 -${DEFAULT_DISTANCE_FROM_USER}`} />}
       </a-scene>
     </>
   );

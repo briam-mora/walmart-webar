@@ -8,10 +8,12 @@
         { "id":"panelista6", "src": "AlbanBarrantes.mp4", "muted": true, "autoPlay": true}
     ],
     "images": [
-        {"id":"image1", "src": "art_shell-24.png"},
-        {"id":"image2", "src": "art_shell-25.png"},
-        {"id":"image3", "src": "art_shell-26.png"},
-        {"id":"image4", "src": "art_shell-27.png"}
+        {"id":"rules_welcome", "src": "reglas_portada.png"},
+        {"id":"rules2", "src": "regla1.png"},
+        {"id":"rules3", "src": "regla2.png"},
+        {"id":"rules4", "src": "regla3.png"},
+        {"id":"rules5", "src": "regla4.png"},
+        {"id":"rules_end", "src": "regla_reflex.png"}
     ],
     "audios": [
         {"id":"audio1", "src": "LOC4.wav"},
