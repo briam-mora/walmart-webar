@@ -37,7 +37,7 @@ AFRAME.registerComponent('camera-background', {
     // Create a camera request button
     const requestButton = document.createElement('div');
     requestButton.id = 'camera-request-button';
-    requestButton.innerHTML = '📷 Enable Camera AR';
+    requestButton.innerHTML = '📷 Habilitar AR Camara';
     requestButton.style.cssText = `
       position: fixed;
       top: 20px;
@@ -214,7 +214,7 @@ AFRAME.registerComponent('camera-background', {
 
   showPermissionDeniedMessage: function () {
     const message = document.createElement('div');
-    message.innerHTML = 'Camera access denied. Using image background.';
+    message.innerHTML = 'Esta Web Inmersiva requiere acceso a los sensores de movimiento de tu dispositivo';
     message.style.cssText = `
       position: fixed;
       top: 20px;

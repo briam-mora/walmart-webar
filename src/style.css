@@ -43,25 +43,48 @@ a-video video {
     background: transparent !important;
 }
 
-.a-dialog-allow-button {
-    background-color: #FFD200 !important;
+/* A-Frame Permission Dialog Styling */
+.a-dialog-allow-button,
+.a-dialog-allow-button:hover,
+.a-dialog-allow-button:focus {
+    background-color: #75b52a !important;
     color: #ffffff !important;
+    border-color: #75b52a !important;
 }
 
-.a-dialog-deny-button {
-    background-color: #EC1C24 !important;
+.a-dialog-deny-button,
+.a-dialog-deny-button:hover,
+.a-dialog-deny-button:focus {
+    background-color: #e42c2c !important;
     color: #ffffff !important;
+    border-color: #e42c2c !important;
 }
 
-.a-dialog-ok-button {
-    background-color: #FFD200 !important;
+.a-dialog-ok-button,
+.a-dialog-ok-button:hover,
+.a-dialog-ok-button:focus {
+    background-color: #75b52a !important;
     color: #ffffff !important;
+    border-color: #75b52a !important;
+}
+
+/* Override A-Frame button text */
+.a-dialog-allow-button::before {
+    content: "Permitir" !important;
+}
+
+.a-dialog-deny-button::before {
+    content: "Denegar" !important;
+}
+
+.a-dialog-ok-button::before {
+    content: "Permitir" !important;
 }
 
 .a-loading-screen {
-    background: #FFD200; /* Background color */
+    background: #0071ce; /* Background color */
     color: #ffffff; /* Text color */
   }
   .a-loading-screen .spinner {
-    border-color: #ffffff transparent transparent transparent; /* Spinner colors */
+    border-color: #ffc21f transparent transparent transparent; /* Spinner colors */
   }
