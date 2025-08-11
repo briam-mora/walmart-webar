@@ -45,8 +45,10 @@ export default {
     {
         outDir: '../dist', // Output in the dist/ folder
         emptyOutDir: true, // Empty the folder first
-        sourcemap: true // Add sourcemap
+        sourcemap: true, // Add sourcemap
+        assetsInlineLimit: 0 // Don't inline GLB files
     },
+    assetsInclude: ['**/*.glb'], // Explicitly include GLB files
     optimizeDeps: {
         include: ['aframe'] // Pre-bundle A-Frame
     }
