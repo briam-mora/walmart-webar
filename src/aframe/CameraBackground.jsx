@@ -9,6 +9,7 @@ AFRAME.registerComponent('camera-background', {
     this.video = null;
     this.isMobile = this.isMobileDevice();
     this.isSecure = window.location.protocol === 'https:';
+    this.cameraRequested = false;
     
     // Don't block scene loading - handle camera access after scene is ready
     this.el.sceneEl.addEventListener('loaded', () => {
@@ -18,10 +19,8 @@ AFRAME.registerComponent('camera-background', {
           this.showHttpsMessage();
           this.fallbackToImage();
         } else {
-          // Small delay to ensure scene is fully loaded
-          setTimeout(() => {
-            this.setupCamera();
-          }, 100);
+          // Add click listener to request camera on user interaction
+          this.setupCameraRequest();
         }
       } else {
         console.log('Camera background only works on mobile devices');
@@ -32,6 +31,70 @@ AFRAME.registerComponent('camera-background', {
 
   isMobileDevice: function () {
     return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+  },
+
+  setupCameraRequest: function () {
+    // Create a camera request button
+    const requestButton = document.createElement('div');
+    requestButton.id = 'camera-request-button';
+    requestButton.innerHTML = '📷 Enable Camera AR';
+    requestButton.style.cssText = `
+      position: fixed;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #FFD200;
+      color: #000;
+      padding: 12px 24px;
+      border-radius: 25px;
+      font-family: Arial, sans-serif;
+      font-weight: bold;
+      font-size: 16px;
+      z-index: 1000;
+      cursor: pointer;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+    `;
+    
+    requestButton.addEventListener('click', () => {
+      this.requestCamera();
+      requestButton.remove();
+    });
+    
+    document.body.appendChild(requestButton);
+  },
+
+  requestCamera: function () {
+    if (this.cameraRequested) return;
+    this.cameraRequested = true;
+    
+    console.log('Requesting camera access...');
+    
+    // Check permissions first
+    if (navigator.permissions && navigator.permissions.query) {
+      console.log('Permissions API available, checking camera permission...');
+      navigator.permissions.query({ name: 'camera' }).then(permissionStatus => {
+        console.log('Camera permission state:', permissionStatus.state);
+        if (permissionStatus.state === 'granted') {
+          console.log('Camera permission already granted');
+          this.setupCamera();
+        } else if (permissionStatus.state === 'prompt') {
+          console.log('Camera permission prompt needed');
+          this.setupCamera();
+        } else {
+          console.log('Camera permission denied');
+          this.showPermissionDeniedMessage();
+          this.fallbackToImage();
+        }
+      }).catch((error) => {
+        console.log('Permissions API error:', error);
+        // Fallback for browsers that don't support permissions API
+        this.setupCamera();
+      });
+    } else {
+      console.log('Permissions API not available, proceeding with camera request...');
+      // Fallback for older browsers
+      this.setupCamera();
+    }
   },
 
   setupCamera: function () {
@@ -45,7 +108,7 @@ AFRAME.registerComponent('camera-background', {
 
     // Add timeout to prevent hanging
     const timeoutPromise = new Promise((_, reject) => {
-      setTimeout(() => reject(new Error('Camera access timeout')), 5000);
+      setTimeout(() => reject(new Error('Camera access timeout')), 10000);
     });
 
     Promise.race([
@@ -73,6 +136,9 @@ AFRAME.registerComponent('camera-background', {
       })
       .catch(error => {
         console.error('Error accessing camera:', error);
+        if (error.name === 'NotAllowedError' || error.name === 'PermissionDeniedError') {
+          this.showPermissionDeniedMessage();
+        }
         // Fallback to image background if camera access fails
         this.fallbackToImage();
       });
@@ -144,6 +210,27 @@ AFRAME.registerComponent('camera-background', {
     message.setAttribute('color', '#FFD200');
     message.setAttribute('width', '4');
     this.el.sceneEl.appendChild(message);
+  },
+
+  showPermissionDeniedMessage: function () {
+    const message = document.createElement('div');
+    message.innerHTML = 'Camera access denied. Using image background.';
+    message.style.cssText = `
+      position: fixed;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #ff4444;
+      color: white;
+      padding: 12px 24px;
+      border-radius: 25px;
+      font-family: Arial, sans-serif;
+      font-size: 14px;
+      z-index: 1000;
+    `;
+    document.body.appendChild(message);
+    
+    setTimeout(() => message.remove(), 3000);
   },
 
   remove: function () {
