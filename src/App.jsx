@@ -158,7 +158,7 @@ export function App() {
         </div>
       </div>
     }
-      <a-scene loading-screen="dotsColor: #FFD200; backgroundColor: #EC1C24" 
+      <a-scene loading-screen="dotsColor: #ffc21f; backgroundColor: #0071ce" 
                renderer="alpha: true; antialias: true; colorManagement: true; precision: mediump"
                onerror="console.error('A-Frame error:', event.detail)"
                embedded="true"

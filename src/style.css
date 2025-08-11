@@ -81,10 +81,3 @@ a-video video {
     content: "Permitir" !important;
 }
 
-.a-loading-screen {
-    background: #0071ce; /* Background color */
-    color: #ffffff; /* Text color */
-  }
-  .a-loading-screen .spinner {
-    border-color: #ffc21f transparent transparent transparent; /* Spinner colors */
-  }
