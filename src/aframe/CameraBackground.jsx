@@ -119,28 +119,19 @@ AFRAME.registerComponent('camera-background', {
   fallbackToImage: function () {
     console.log('Falling back to image background');
     
-    // Create a background container if it doesn't exist
-    let backgroundContainer = document.getElementById('camera-background-container');
-    if (!backgroundContainer) {
-      backgroundContainer = document.createElement('div');
-      backgroundContainer.id = 'camera-background-container';
-      backgroundContainer.style.cssText = `
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100vw;
-        height: 100vh;
-        z-index: -1;
-        overflow: hidden;
-        background: url('panorama4k.png') center center / cover no-repeat;
-      `;
-      document.body.appendChild(backgroundContainer);
+    // Remove any existing background container
+    const backgroundContainer = document.getElementById('camera-background-container');
+    if (backgroundContainer) {
+      document.body.removeChild(backgroundContainer);
     }
 
-    // Show the original skybox if camera access fails
+    // Show the original skybox - this is the proper fallback for A-Frame
     const sky = this.el.sceneEl.querySelector('a-sky');
     if (sky) {
       sky.setAttribute('visible', true);
+      // Ensure the sky is properly positioned and scaled
+      sky.setAttribute('position', '0 0 0');
+      sky.setAttribute('scale', '1 1 1');
     }
   },
 

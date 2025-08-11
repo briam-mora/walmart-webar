@@ -31,7 +31,15 @@ export default {
     server:
     {
         host: true, // Open to local network and display URL
-        open: !('SANDBOX_URL' in process.env || 'CODESANDBOX_HOST' in process.env) // Open if it's not a CodeSandbox
+        open: !('SANDBOX_URL' in process.env || 'CODESANDBOX_HOST' in process.env), // Open if it's not a CodeSandbox
+        cors: true, // Enable CORS
+        headers: {
+            'Cross-Origin-Embedder-Policy': 'unsafe-none',
+            'Cross-Origin-Opener-Policy': 'unsafe-none',
+        },
+        fs: {
+            allow: ['..'] // Allow serving files from parent directory
+        }
     },
     build:
     {
@@ -39,4 +47,7 @@ export default {
         emptyOutDir: true, // Empty the folder first
         sourcemap: true // Add sourcemap
     },
+    optimizeDeps: {
+        include: ['aframe'] // Pre-bundle A-Frame
+    }
 }
