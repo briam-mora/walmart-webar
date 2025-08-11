@@ -46,10 +46,16 @@ const VideoGallery = ({ titleSrc, videos, position, rotation, scale, closeFuncti
     if (videoElement) {
       videoRef.current = videoElement;
       videoElement.currentTime = 0;
-      video.removeAttribute("loop");
-      videoElement.play();
+      videoElement.removeAttribute("loop");
+      // Only autoplay if user has interacted with the page
+      if (playing) {
+        videoElement.play().catch(error => {
+          // Silently handle autoplay failure
+          console.log('Autoplay blocked:', error.message);
+        });
+      }
     }
-  }, [currentIndex]);
+  }, [currentIndex, playing]);
 
   return (
     currentIndex !== null && <a-entity
