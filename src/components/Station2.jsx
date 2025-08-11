@@ -20,31 +20,35 @@ const Station2 = ({ position }) => {
           position="-0.6 1 0"
           rotation="0 0 0"
           scale="0.1 0.1 0.1"
-          hover-animator="duration: 2000; easing: easeInOutQuad;"
+          hover-animator="duration: 2000; easing: easeInOutQuad; delay: 200;"
         />
         <a-entity
           gltf-model="GloboInclusion.glb"
           position="-0.3 1 0"
           rotation="0 0 0"
           scale="0.1 0.1 0.1"
+          hover-animator="duration: 2000; easing: easeInOutQuad; delay: 800;"
         />
         <a-entity
           gltf-model="GloboOportunidad.glb"
           position="0 1 0"
           rotation="0 0 0"
           scale="0.1 0.1 0.1"
+          hover-animator="duration: 2000; easing: easeInOutQuad; delay: 1500;"
         />
         <a-entity
           gltf-model="GloboProposito.glb"
           position="0.3 1 0"
           rotation="0 0 0"
           scale="0.1 0.1 0.1"
+          hover-animator="duration: 2000; easing: easeInOutQuad; delay: 300;"
         />
         <a-entity
           gltf-model="GloboReto.glb"
           position="0.6 1 0"
           rotation="0 0 0"
           scale="0.1 0.1 0.1"
+          hover-animator="duration: 2000; easing: easeInOutQuad; delay: 1200;"
         />
       </a-entity>
     </a-entity>
