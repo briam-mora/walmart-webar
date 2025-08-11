@@ -16,32 +16,32 @@ const Station2 = ({ position }) => {
           scale="0.4 0.4 0.4"
         />
         <a-entity
-          gltf-model="Globo Disfrute.glb"
+          gltf-model="GloboDisfrute.glb"
           position="-0.6 1 0"
           rotation="0 0 0"
           scale="0.1 0.1 0.1"
           hover-animator="duration: 2000; easing: easeInOutQuad;"
         />
         <a-entity
-          gltf-model="Globo Inclusion.glb"
+          gltf-model="GloboInclusion.glb"
           position="-0.3 1 0"
           rotation="0 0 0"
           scale="0.1 0.1 0.1"
         />
         <a-entity
-          gltf-model="Globo Oportunidad.glb"
+          gltf-model="GloboOportunidad.glb"
           position="0 1 0"
           rotation="0 0 0"
           scale="0.1 0.1 0.1"
         />
         <a-entity
-          gltf-model="Globo Proposito.glb"
+          gltf-model="GloboProposito.glb"
           position="0.3 1 0"
           rotation="0 0 0"
           scale="0.1 0.1 0.1"
         />
         <a-entity
-          gltf-model="Globo Reto.glb"
+          gltf-model="GloboReto.glb"
           position="0.6 1 0"
           rotation="0 0 0"
           scale="0.1 0.1 0.1"
