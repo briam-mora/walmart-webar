@@ -68,16 +68,5 @@ a-video video {
     border-color: #75b52a !important;
 }
 
-/* Override A-Frame button text */
-.a-dialog-allow-button::before {
-    content: "Permitir" !important;
-}
 
-.a-dialog-deny-button::before {
-    content: "Denegar" !important;
-}
-
-.a-dialog-ok-button::before {
-    content: "Permitir" !important;
-}
 

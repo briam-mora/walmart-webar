@@ -11,14 +11,22 @@ AFRAME.registerComponent('camera-background', {
     this.isSecure = window.location.protocol === 'https:';
     this.cameraRequested = false;
     
+    console.log('CameraBackground init:', {
+      isMobile: this.isMobile,
+      isSecure: this.isSecure,
+      protocol: window.location.protocol
+    });
+    
     // Don't block scene loading - handle camera access after scene is ready
     this.el.sceneEl.addEventListener('loaded', () => {
+      console.log('Scene loaded, checking camera access...');
       if (this.isMobile) {
         if (!this.isSecure) {
           console.log('Camera access requires HTTPS. Using fallback background.');
           this.showHttpsMessage();
           this.fallbackToImage();
         } else {
+          console.log('Mobile + HTTPS detected, setting up camera request...');
           // Add click listener to request camera on user interaction
           this.setupCameraRequest();
         }
@@ -34,33 +42,12 @@ AFRAME.registerComponent('camera-background', {
   },
 
   setupCameraRequest: function () {
-    // Create a camera request button
-    const requestButton = document.createElement('div');
-    requestButton.id = 'camera-request-button';
-    requestButton.innerHTML = '📷 Habilitar AR Camara';
-    requestButton.style.cssText = `
-      position: fixed;
-      top: 20px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: #FFD200;
-      color: #000;
-      padding: 12px 24px;
-      border-radius: 25px;
-      font-family: Arial, sans-serif;
-      font-weight: bold;
-      font-size: 16px;
-      z-index: 1000;
-      cursor: pointer;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
-    `;
-    
-    requestButton.addEventListener('click', () => {
+    console.log('Setting up camera request...');
+    // Automatically request camera after a short delay for better UX
+    setTimeout(() => {
+      console.log('Auto-requesting camera access...');
       this.requestCamera();
-      requestButton.remove();
-    });
-    
-    document.body.appendChild(requestButton);
+    }, 1000); // 1 second delay
   },
 
   requestCamera: function () {
