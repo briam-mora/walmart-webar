@@ -6,9 +6,12 @@ const Station5 = ({ position }) => {
   return (
     <a-entity id="station-5" position={position} scale-animator="duration: 500; easing: easeInOutCubic">
       <ImageGallery
-          id='gallery-2'
-          images={content.images.map(image => `#${image.id}`)}
-          audios={content.audios.map(audio => `${audio.src}`)}
+        id='gallery-2'
+        images={content.memory.map(card => `#${card.id}`)}
+        audios={content.audios.map(audio => `${audio.src}`)}
+        position="0 0 0"
+        rotation="0 0 0"
+        closeFunction={() => {}}
       />
     </a-entity>
   );

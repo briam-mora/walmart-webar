@@ -15,6 +15,14 @@
         {"id":"rules5", "src": "regla4.png"},
         {"id":"rules_end", "src": "regla_reflex.png"}
     ],
+    "memory": [
+        {"id":"card1", "src": "carta1.png"},
+        {"id":"card2", "src": "carta2.png"},
+        {"id":"card3", "src": "carta3.png"},
+        {"id":"card4", "src": "carta4.png"},
+        {"id":"card5", "src": "carta5.png"},
+        {"id":"card6", "src": "carta6.png"}
+    ],
     "audios": [
         {"id":"audio1", "src": "LOC4.wav"},
         {"id":"audio2", "src": "LOC5.wav"},
@@ -28,5 +36,15 @@
         {"id":"panelist-button-4", "src": "nuevo-small_panelista4.png"},
         {"id":"panelist-button-5", "src": "nuevo-small_panelista5.png"},
         {"id":"panelist-button-6", "src": "nuevo-small_panelista6.png"}
+    ],
+    "stations": [
+        {"id": 0, "name": "Instrucciones"},
+        {"id": 1, "name": "Video"},
+        {"id": 2, "name": "Globos"},
+        {"id": 3, "name": "Reglas"},
+        {"id": 4, "name": "Memoria"},
+        {"id": 5, "name": "Plataforma"},
+        {"id": 6, "name": "Trivia"},
+        {"id": 7, "name": "Encuesta"}
     ]
 }

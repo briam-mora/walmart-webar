@@ -35,7 +35,7 @@ export function App() {
     if (currentStation === -1) {
       next = 0; // Start with first station if all are hidden
     } else {
-      next = (currentStation + 1) % 7;
+      next = (currentStation + 1) % 8;
     }
     setCurrentStation(next);
     
@@ -56,6 +56,41 @@ export function App() {
       ...prev,
       [next]: true
     }));
+  };
+
+  const prevStation = () => {
+    let prev;
+    if (currentStation === -1) {
+      prev = 0;
+    } else {
+      prev = (currentStation - 1 + 8) % 8;
+    }
+    setCurrentStation(prev);
+    
+    // Hide all stations first
+    setStationsVisible({
+      0: false,
+      1: false, 
+      2: false,
+      3: false,
+      4: false,
+      5: false,
+      6: false,
+      7: false,
+    });
+    
+    // Show only the previous station
+    setStationsVisible(prevState => ({
+      ...prevState,
+      [prev]: true
+    }));
+  };
+
+  // Get current station name
+  const getCurrentStationName = () => {
+    if (currentStation === -1) return '';
+    const station = content.stations.find(s => s.id === currentStation);
+    return station ? station.name : '';
   };
 
 
@@ -111,40 +146,88 @@ export function App() {
             {/* Station Control UI */}
       {started && <div style={{
         position: 'fixed',
-        bottom: '20px',
+        bottom: '10px',
         left: '50%',
         transform: 'translateX(-50%)',
         zIndex: 1000,
-        background: 'rgba(0,0,0,0.9)',
-        padding: '20px',
-        borderRadius: '15px',
-        color: 'white',
-        fontFamily: 'Arial, sans-serif',
-        minWidth: '280px',
-        textAlign: 'center',
-        boxShadow: '0 4px 20px rgba(0,0,0,0.3)'
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        minWidth: '300px',
+        maxWidth: '90vw'
       }}>
-        <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '15px' }}>
+        {/* Navigation Bar */}
+        <div style={{
+          background: '#ADD8E6',
+          borderRadius: '25px',
+          padding: '12px 20px',
+          display: 'flex',
+          alignItems: 'center',
+          gap: '16px',
+          boxShadow: '0 4px 20px rgba(0,0,0,0.2)',
+          position: 'relative',
+          width: '100%',
+          justifyContent: 'space-between'
+        }}>
+          {/* Previous Button */}
+          <button 
+            onClick={prevStation}
+            style={{
+              background: '#4169E1',
+              color: 'white',
+              border: 'none',
+              borderRadius: '50%',
+              width: '40px',
+              height: '40px',
+              cursor: 'pointer',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              fontSize: '20px',
+              fontWeight: 'bold',
+              transition: 'all 0.2s ease',
+              minWidth: '40px',
+              minHeight: '40px'
+            }}
+          >
+            ‹
+          </button>
+
+          {/* Station Name */}
+          <div style={{
+            color: '#000080',
+            fontSize: '18px',
+            fontWeight: 'bold',
+            fontFamily: 'Arial, sans-serif',
+            minWidth: '120px',
+            textAlign: 'center'
+          }}>
+            {getCurrentStationName()}
+          </div>
+
+          {/* Next Button */}
           <button 
             onClick={nextStation}
             style={{
-              background: currentStation === 0 ? '#FFD200' : '#333',
-              color: currentStation === 0 ? '#000' : '#fff',
+              background: '#4169E1',
+              color: 'white',
               border: 'none',
-              padding: '12px 24px',
-              borderRadius: '25px',
+              borderRadius: '50%',
+              width: '40px',
+              height: '40px',
               cursor: 'pointer',
-              fontSize: '16px',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              fontSize: '20px',
               fontWeight: 'bold',
-              minWidth: '120px',
-              transition: 'all 0.2s ease'
+              transition: 'all 0.2s ease',
+              minWidth: '40px',
+              minHeight: '40px'
             }}
           >
-            Next Station
+            ›
           </button>
-        </div>
-        <div style={{ fontSize: '14px', opacity: 0.9 }}>
-          <div>Current Station: {currentStation === -1 ? 'None' : currentStation + 1}</div>
         </div>
       </div>
     }
@@ -162,6 +245,7 @@ export function App() {
           <img id="panorama" src="panorama.webp" crossOrigin="anonymous" />
           {content.videos.map(video => <video key={video.id} id={video.id} src={video.src} muted={video.muted} autoPlay={video.autoPlay} loop={false} preload="metadata"></video>)}
           {content.images.map(image => <img key={image.id} id={image.id} src={image.src} crossOrigin="anonymous" preload="auto" />)}
+          {content.memory.map(card => <img key={card.id} id={card.id} src={card.src} crossOrigin="anonymous" preload="auto" />)}
           {content.panelists.map(panelist => <img key={panelist.id} id={panelist.id} src={panelist.src} crossOrigin="anonymous" preload="auto" />)}
           <img id="light-arrow" src="icono.png" crossOrigin="anonymous" preload="auto" />
           <img id="play-button" src="play.png" crossOrigin="anonymous" preload="auto" />
@@ -192,6 +276,7 @@ export function App() {
           <img id="next" src="next.png" crossOrigin="anonymous" preload="auto" />
           <img id="prev" src="prev.png" crossOrigin="anonymous" preload="auto" />
           <img id="close" src="close.png" crossOrigin="anonymous" preload="auto" />
+          <img id="cardback" src="cardback.png" crossOrigin="anonymous" preload="auto" />
           <img id="date" src="date.png" crossOrigin="anonymous" preload="auto" />
           <video id="video" src="video.mp4" autoPlay={false} loop={false} preload="metadata" style={{background: 'transparent'}}></video>
           <audio src="bienvenida.wav" preload="auto"></audio>
@@ -209,14 +294,14 @@ export function App() {
           material="shader: flat"
           onClick={(e) => {
             setStarted(true);
-            var audio = new Audio('shell_musica.wav');
-            audio.loop = true; // Enable looping
-            audio.play();
-            audio.volume = 0.2;
-            var voice = new Audio('LOC2.wav');
-            voice.play();
-            var button = new Audio('boton.wav');
-            button.play();
+            // var audio = new Audio('shell_musica.wav');
+            // audio.loop = true; // Enable looping
+            // audio.play();
+            // audio.volume = 0.2;
+            // var voice = new Audio('LOC2.wav');
+            // voice.play();
+            // var button = new Audio('boton.wav');
+            // button.play();
             e.target.setAttribute("scale", "0 0 0")
             nextStation();
           }}
@@ -229,7 +314,7 @@ export function App() {
         {started && stationsVisible[2] && <Station2 position={`0 -0.5 -${DEFAULT_DISTANCE_FROM_USER}`} />}
 
         {started && stationsVisible[3] && <Station3 position={`0 0.3 -${DEFAULT_DISTANCE_FROM_USER}`} />}
-        {started && stationsVisible[4] && <Station4 position={`0 0 -${DEFAULT_DISTANCE_FROM_USER}`} />}
+        {started && stationsVisible[4] && <Station4 position={`0 0 -${DEFAULT_DISTANCE_FROM_USER + 1}`} />}
         {started && stationsVisible[5] && <Station5 position={`0 0.3 -${DEFAULT_DISTANCE_FROM_USER}`} />}
         {started && stationsVisible[6] && <Station6 position={`0 0 -${DEFAULT_DISTANCE_FROM_USER}`} />}
         {started && stationsVisible[7] && <Station7 position={`0 0 -${DEFAULT_DISTANCE_FROM_USER}`} />}
