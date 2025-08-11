@@ -246,6 +246,7 @@ export function App() {
           {content.videos.map(video => <video key={video.id} id={video.id} src={video.src} muted={video.muted} autoPlay={video.autoPlay} loop={false} preload="metadata"></video>)}
           {content.images.map(image => <img key={image.id} id={image.id} src={image.src} crossOrigin="anonymous" preload="auto" />)}
           {content.memory.map(card => <img key={card.id} id={card.id} src={card.src} crossOrigin="anonymous" preload="auto" />)}
+          {content.memory_win.map(card => <img key={card.id} id={card.id} src={card.src} crossOrigin="anonymous" preload="auto" />)}
           {content.panelists.map(panelist => <img key={panelist.id} id={panelist.id} src={panelist.src} crossOrigin="anonymous" preload="auto" />)}
           <img id="light-arrow" src="icono.png" crossOrigin="anonymous" preload="auto" />
           <img id="play-button" src="play.png" crossOrigin="anonymous" preload="auto" />

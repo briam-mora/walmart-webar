@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import 'aframe';
 
-const ImageGallery = ({ images, audios, position, rotation, closeFunction }) => {
+const ImageGallery = ({ images, audios, position, rotation }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
 
   // Handlers for navigation

@@ -16,12 +16,20 @@
         {"id":"rules_end", "src": "regla_reflex.png"}
     ],
     "memory": [
-        {"id":"card1", "src": "carta1.png"},
-        {"id":"card2", "src": "carta2.png"},
-        {"id":"card3", "src": "carta3.png"},
-        {"id":"card4", "src": "carta4.png"},
-        {"id":"card5", "src": "carta5.png"},
-        {"id":"card6", "src": "carta6.png"}
+        {"id":"card1", "src": "card1.png"},
+        {"id":"card2", "src": "card2.png"},
+        {"id":"card3", "src": "card3.png"},
+        {"id":"card4", "src": "card4.png"},
+        {"id":"card5", "src": "card5.png"},
+        {"id":"card6", "src": "card6.png"}
+    ],
+    "memory_win": [
+        {"id":"card1_win", "src": "card1_win.png"},
+        {"id":"card2_win", "src": "card2_win.png"},
+        {"id":"card3_win", "src": "card3_win.png"},
+        {"id":"card4_win", "src": "card4_win.png"},
+        {"id":"card5_win", "src": "card5_win.png"},
+        {"id":"card6_win", "src": "card6_win.png"}
     ],
     "audios": [
         {"id":"audio1", "src": "LOC4.wav"},

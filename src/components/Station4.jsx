@@ -5,6 +5,7 @@ const Station4 = ({ position }) => {
   const [flippedCards, setFlippedCards] = useState([]);
   const [matchedPairs, setMatchedPairs] = useState([]);
   const [gameWon, setGameWon] = useState(false);
+  const [visibleWinImages, setVisibleWinImages] = useState([]);
 
   // Create pairs of cards (6 pairs = 12 cards total)
   const createCardPairs = () => {
@@ -62,6 +63,9 @@ const Station4 = ({ position }) => {
         setMatchedPairs(prev => [...prev, firstCard.pairId]);
         setFlippedCards([]);
         
+        // Show win image for this pair
+        setVisibleWinImages(prev => [...prev, firstCard.pairId]);
+        
         // Check if game is won
         if (matchedPairs.length + 1 === content.memory.length) {
           setGameWon(true);
@@ -86,6 +90,7 @@ const Station4 = ({ position }) => {
     setFlippedCards([]);
     setMatchedPairs([]);
     setGameWon(false);
+    setVisibleWinImages([]);
   };
 
   // Grid layout: 4 rows x 3 columns (12 cards total - 6 pairs)
@@ -148,6 +153,24 @@ const Station4 = ({ position }) => {
           </a-entity>
         );
       })}
+
+      {/* Win Images for Matched Pairs */}
+      {visibleWinImages.map((pairId) => (
+        <a-entity key={`win-${pairId}`} position="0 0 1">
+          <a-plane
+            src={`#${pairId}_win`}
+            position="0 0 0"
+            width="2"
+            height="2.5"
+            class="clickable"
+            onClick={() => {
+              setVisibleWinImages(prev => prev.filter(id => id !== pairId));
+            }}
+            material="shader: flat"
+            transparent="true"
+          />
+        </a-entity>
+      ))}
 
       {/* Win Message */}
       {gameWon && (
