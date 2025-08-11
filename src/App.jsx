@@ -279,7 +279,7 @@ export function App() {
           <img id="close" src="close.png" crossOrigin="anonymous" preload="auto" />
           <img id="cardback" src="cardback.png" crossOrigin="anonymous" preload="auto" />
           <img id="date" src="date.png" crossOrigin="anonymous" preload="auto" />
-          <video id="video" src="video.mp4" autoPlay={false} loop={false} preload="metadata" style={{background: 'transparent'}}></video>
+          <video id="video" src="video.webm" autoPlay={false} loop={false} preload="metadata" style={{background: 'transparent'}}></video>
           <audio src="bienvenida.wav" preload="auto"></audio>
         </a-assets>
 
