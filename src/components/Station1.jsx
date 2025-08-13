@@ -10,8 +10,14 @@ const Station1 = ({ position }) => {
         rotation="0 0 0"
         scale="1 1 1"
         width="7.94"
-        height="10.8"
+        height="14.8"
       />
+      <a-entity
+          gltf-model="marco.glb"
+          position="0.005 -0.85 0.05"
+          rotation="0 0 0"
+          scale="0.264 0.264 0.264"
+        />
     </a-entity>
   );
 };

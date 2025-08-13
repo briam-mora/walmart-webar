@@ -77,5 +77,233 @@ a-video video {
     border-color: #75b52a !important;
 }
 
+/* Station 7 Feedback Form Styles */
+.station-7 {
+  z-index: 1000;
+  width: 400px;
+  max-width: 90vw;
+  position: fixed !important;
+  top: 50% !important;
+  left: 50% !important;
+  transform: translate(-50%, -50%) !important;
+}
+
+.feedback-form-container {
+  background: linear-gradient(135deg, #87CEEB, #B0E0E6);
+  border-radius: 20px;
+  padding: 20px;
+  padding-top: 40px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  position: relative;
+  overflow: visible;
+  margin-top: 30px;
+}
+
+.feedback-header {
+  text-align: center;
+  margin-bottom: 25px;
+  position: relative;
+}
+
+.banner {
+  width: 120%;
+  height: auto;
+  object-fit: cover;
+  position: absolute;
+  top: -90px;
+  left: -10%;
+  z-index: 1;
+  border-radius: 0;
+  display: block !important;
+}
+
+.feedback-title {
+  color: #1e40af;
+  font-size: 28px;
+  font-weight: bold;
+  margin: 0;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+  position: relative;
+  z-index: 2;
+  margin-top: 20px;
+}
+
+.feedback-form {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+
+.feedback-question h3 {
+  color: #1e40af;
+  font-size: 18px;
+  font-weight: 600;
+  margin: 0 0 15px 0;
+  text-align: center;
+}
+
+.feedback-options {
+  display: flex;
+  justify-content: space-around;
+  gap: 10px;
+}
+
+.feedback-option {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  padding: 10px;
+  border-radius: 15px;
+  transition: all 0.3s ease;
+  min-width: 80px;
+}
+
+.feedback-option:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: translateY(-2px);
+}
+
+.feedback-option.selected {
+  background: rgba(255, 255, 255, 0.5);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.feedback-icon {
+  width: 60px;
+  height: 60px;
+  transition: transform 0.3s ease;
+  display: block;
+}
+
+.feedback-option:hover .feedback-icon {
+  transform: scale(1.1);
+}
+
+.feedback-label {
+  color: #000;
+  font-size: 14px;
+  font-weight: 500;
+  text-align: center;
+  margin-top: 5px;
+}
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.input-group label {
+  color: #1e40af;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.feedback-input {
+  background: #1e40af;
+  border: none;
+  border-radius: 10px;
+  padding: 12px 16px;
+  color: white;
+  font-size: 16px;
+  transition: all 0.3s ease;
+}
+
+.feedback-input::placeholder {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.feedback-input:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(30, 64, 175, 0.3);
+  transform: translateY(-1px);
+}
+
+.submit-button {
+  background: #1e40af;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  padding: 15px 30px;
+  font-size: 18px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 10px;
+}
+
+.submit-button:hover:not(:disabled) {
+  background: #1d4ed8;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 20px rgba(30, 64, 175, 0.4);
+}
+
+.submit-button:disabled {
+  background: #9ca3af;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.feedback-summary {
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 15px;
+  padding: 20px;
+  margin: 20px 0;
+}
+
+.feedback-summary p {
+  margin: 10px 0;
+  color: #1e40af;
+  font-size: 16px;
+}
+
+.reset-button {
+  background: #10b981;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  padding: 12px 24px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  width: 100%;
+}
+
+.reset-button:hover {
+  background: #059669;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 20px rgba(16, 185, 129, 0.4);
+}
+
+/* Responsive adjustments */
+@media (max-width: 480px) {
+  .station-7 {
+    width: 95vw;
+  }
+  
+  .feedback-form-container {
+    padding: 15px;
+  }
+  
+  .feedback-title {
+    font-size: 24px;
+  }
+  
+  .feedback-options {
+    gap: 5px;
+  }
+  
+  .feedback-icon {
+    width: 40px;
+    height: 40px;
+  }
+}
+
 
 

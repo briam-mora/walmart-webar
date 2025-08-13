@@ -1,11 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import content from '../content.json';
+import { useAudio } from '../contexts/AudioContext';
 
 const Station4 = ({ position }) => {
+  const { playAudioFile } = useAudio();
   const [flippedCards, setFlippedCards] = useState([]);
   const [matchedPairs, setMatchedPairs] = useState([]);
   const [gameWon, setGameWon] = useState(false);
   const [visibleWinImages, setVisibleWinImages] = useState([]);
+
+  // Play intro sound when component mounts
+  useEffect(() => {
+    const introSound = content.audios.station_4.find(audio => audio.id === 'intro_station_4');
+    if (introSound) {
+      playAudioFile(introSound.src);
+    }
+  }, [playAudioFile]);
 
   // Create pairs of cards (6 pairs = 12 cards total)
   const createCardPairs = () => {
@@ -47,6 +57,12 @@ const Station4 = ({ position }) => {
       c.id === cardId ? { ...c, isFlipped: true } : c
     );
     setCards(updatedCards);
+    
+    // Play flip sound
+    const flipSound = content.audios.station_4.find(audio => audio.id === 'audio_flip');
+    if (flipSound) {
+      playAudioFile(flipSound.src);
+    }
 
     // Add to flipped cards
     const newFlippedCards = [...flippedCards, cardId];
@@ -63,12 +79,26 @@ const Station4 = ({ position }) => {
         setMatchedPairs(prev => [...prev, firstCard.pairId]);
         setFlippedCards([]);
         
+        // Play pair found sound for the specific card
+        const cardData = content.memory.find(card => card.id === firstCard.pairId);
+        if (cardData && cardData.sound_id) {
+          const pairSound = content.audios.station_4.find(audio => audio.id === cardData.sound_id);
+          if (pairSound) {
+            playAudioFile(pairSound.src);
+          }
+        }
+        
         // Show win image for this pair
         setVisibleWinImages(prev => [...prev, firstCard.pairId]);
         
         // Check if game is won
         if (matchedPairs.length + 1 === content.memory.length) {
           setGameWon(true);
+          // Play game won sound
+          const winSound = content.audios.station_4.find(audio => audio.id === 'audio_win');
+          if (winSound) {
+            playAudioFile(winSound.src);
+          }
         }
       } else {
         // No match, flip cards back after delay
@@ -160,6 +190,7 @@ const Station4 = ({ position }) => {
           <a-plane
             src={`#${pairId}_win`}
             position="0 0 0"
+            scale="0.5 0.5 0.5"
             width="2"
             height="2.5"
             class="clickable"

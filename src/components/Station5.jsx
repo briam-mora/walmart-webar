@@ -8,7 +8,7 @@ const Station5 = ({ position }) => {
       <ImageGallery
         id='gallery-2'
         images={content.images.map(card => `#${card.id}`)}
-        audios={content.audios.map(audio => `${audio.src}`)}
+        audios={content.audios.station_5.map(audio => `${audio.src}`)}
         position="0 0 0"
         rotation="0 0 0"
         closeFunction={() => {}}

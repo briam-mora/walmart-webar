@@ -1,12 +1,4 @@
 {
-    "videos": [
-        { "id":"panelista1", "src": "RafaelSegovia.mp4", "muted": true, "autoPlay": true},
-        { "id":"panelista2", "src": "ScarletPietri.mp4", "muted": true, "autoPlay": true},
-        { "id":"panelista3", "src": "AdrianaGonzalez.mp4", "muted": true, "autoPlay": true},
-        { "id":"panelista4", "src": "StephanieMora.mp4", "muted": true, "autoPlay": true},
-        { "id":"panelista5", "src": "MaureenPhillips.mp4", "muted": true, "autoPlay": true},
-        { "id":"panelista6", "src": "AlbanBarrantes.mp4", "muted": true, "autoPlay": true}
-    ],
     "images": [
         {"id":"rules_welcome", "src": "reglas_portada.png"},
         {"id":"rules2", "src": "regla1.png"},
@@ -16,12 +8,12 @@
         {"id":"rules_end", "src": "regla_reflex.png"}
     ],
     "memory": [
-        {"id":"card1", "src": "card1.png"},
-        {"id":"card2", "src": "card2.png"},
-        {"id":"card3", "src": "card3.png"},
-        {"id":"card4", "src": "card4.png"},
-        {"id":"card5", "src": "card5.png"},
-        {"id":"card6", "src": "card6.png"}
+        {"id":"card1", "src": "card1.png", "sound_id": "audio_suli"},
+        {"id":"card2", "src": "card2.png", "sound_id": "audio_marketside"},
+        {"id":"card3", "src": "card3.png", "sound_id": "audio_mainstays"},
+        {"id":"card4", "src": "card4.png", "sound_id": "audio_greatvalue"},
+        {"id":"card5", "src": "card5.png", "sound_id": "audio_suli"},
+        {"id":"card6", "src": "card6.png", "sound_id": "audio_boulevard"}
     ],
     "memory_win": [
         {"id":"card1_win", "src": "card1_win.png"},
@@ -31,12 +23,43 @@
         {"id":"card5_win", "src": "card5_win.png"},
         {"id":"card6_win", "src": "card6_win.png"}
     ],
-    "audios": [
-        {"id":"audio1", "src": "LOC4.wav"},
-        {"id":"audio2", "src": "LOC5.wav"},
-        {"id":"audio3", "src": "LOC6.wav"},
-        {"id":"audio4", "src": "LOC8.wav"}
-    ],
+    "audios": {
+        "station_2": [
+            {"id":"intro_station_2", "src": "sounds/station_2/LocE2_1.mp3"},
+            {"id":"globo_1", "src": "sounds/station_2/prodi_disfrute.mp3"},
+            {"id":"globo_2", "src": "sounds/station_2/prodi_inclusion.mp3"},
+            {"id":"globo_3", "src": "sounds/station_2/prodi_oportunidad.mp3"},
+            {"id":"globo_4", "src": "sounds/station_2/prodi_proposito.mp3"},
+            {"id":"globo_5", "src": "sounds/station_2/prodi_reto.mp3"}
+        ],
+        "station_3": [
+            {"id":"intro_station_3", "src": "sounds/station_3/general.mp3"},
+            {"id":"regla_1", "src": "sounds/station_3/regla1.mp3"},
+            {"id":"regla_2", "src": "sounds/station_3/regla2.mp3"},
+            {"id":"regla_3", "src": "sounds/station_3/regla3.mp3"},
+            {"id":"regla_4", "src": "sounds/station_3/regla4.mp3"},
+            {"id":"regla_reflex", "src": "sounds/station_3/regla_reflex.mp3"}
+        ],
+        "station_4": [
+            {"id":"intro_station_4", "src": "sounds/station_4/iniciomemoria.mp3"},
+            {"id":"audio_boulevard", "src": "sounds/station_4/boulevard.mp3"},
+            {"id":"audio_greatvalue", "src": "sounds/station_4/greatvalue.mp3"},
+            {"id":"audio_mainstays", "src": "sounds/station_4/mainstays.mp3"},
+            {"id":"audio_marketside", "src": "sounds/station_4/marketside.mp3"},
+            {"id":"audio_suli", "src": "sounds/station_4/suli.mp3"},
+            {"id":"audio_win", "src": "sounds/station_4/win.mp3"},
+            {"id":"audio_flip", "src": "sounds/station_4/flip.mp3"}
+        ],
+        "station_5": [
+            {"id":"plataforma_1", "src": "sounds/station_5/LocE5_1.mp3"},
+            {"id":"plataforma_2", "src": "sounds/station_5/LocE5_2.mp3"},
+            {"id":"plataforma_3", "src": "sounds/station_5/LocE5_3.mp3"},
+            {"id":"plataforma_4", "src": "sounds/station_5/LocE5_4.mp3"},
+            {"id":"plataforma_5", "src": "sounds/station_5/LocE5_4.mp3"},
+            {"id":"plataforma_6", "src": "sounds/station_5/LocE5_4.mp3"}
+        ],
+        "station_6": []
+    },
     "panelists": [
         {"id":"panelist-button-1", "src": "nuevo-small_panelista1.png"},
         {"id":"panelist-button-2", "src": "nuevo-small_panelista2.png"},
@@ -46,13 +69,12 @@
         {"id":"panelist-button-6", "src": "nuevo-small_panelista6.png"}
     ],
     "stations": [
-        {"id": 0, "name": "Instrucciones"},
-        {"id": 1, "name": "Video"},
-        {"id": 2, "name": "Globos"},
-        {"id": 3, "name": "Reglas"},
-        {"id": 4, "name": "Memoria"},
-        {"id": 5, "name": "Plataforma"},
-        {"id": 6, "name": "Trivia"},
-        {"id": 7, "name": "Encuesta"}
+        {"id": 0, "name": "Video"},
+        {"id": 1, "name": "Globos"},
+        {"id": 2, "name": "Reglas"},
+        {"id": 3, "name": "Memoria"},
+        {"id": 4, "name": "Plataforma"},
+        {"id": 5, "name": "Trivia"},
+        {"id": 6, "name": "Encuesta"}
     ]
 }

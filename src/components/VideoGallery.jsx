@@ -1,22 +1,22 @@
 import React, { useEffect, useRef, useState } from 'react';
 import 'aframe';
+import { useAudio } from '../contexts/AudioContext.jsx';
 
 const VideoGallery = ({ videos, position, rotation, scale, closeFunction, width, height }) => {
   const videoRef = useRef(null); // Reference to the video element
+  const { playAudioFile } = useAudio();
 
   const [currentIndex, setCurrentIndex] = useState(0);
   const [playing, setPlaying] = useState(videos[0].autoPlay);
 
   // Handlers for navigation
   const handleNext = () => {
-    var audio = new Audio('click.wav');
-    audio.play();
+    playAudioFile('click.wav');
     setCurrentIndex((prevIndex) => (prevIndex + 1) % videos.length);
   };
 
   const handlePrev = () => {
-    var audio = new Audio('click.wav');
-    audio.play();
+    playAudioFile('click.wav');
     setCurrentIndex((prevIndex) => (prevIndex - 1 + videos.length) % videos.length);
   };
 
@@ -31,8 +31,7 @@ const VideoGallery = ({ videos, position, rotation, scale, closeFunction, width,
       if (videoElement.paused) {
         setPlaying(true)
         videoElement.play();
-        var audio = new Audio('activacion_video.wav');
-        audio.play();
+        playAudioFile('activacion_video.wav');
       } else {
         setPlaying(false)
         videoElement.pause();
@@ -72,7 +71,6 @@ const VideoGallery = ({ videos, position, rotation, scale, closeFunction, width,
         width={width}
         height={height}
         position="0 0 0"
-        scale-animator="duration: 500; easing: easeInOutCubic"
         onClick={handleVideoClick}
         scale="0.1 0.1 0.1"
         transparent="true"

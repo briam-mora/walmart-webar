@@ -1,20 +1,41 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import 'aframe';
+import { useAudio } from '../contexts/AudioContext.jsx';
 
-const ImageGallery = ({ images, audios, position, rotation }) => {
+const ImageGallery = ({ images, audios, position, rotation, autoPlayFirstAudio = false }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const { playAudioFile } = useAudio();
+
+  // Auto-play first audio only if explicitly requested
+  useEffect(() => {
+    if (autoPlayFirstAudio && audios && audios.length > 0 && audios[0]) {
+      playAudioFile(audios[0]);
+    }
+  }, [audios, playAudioFile, autoPlayFirstAudio]);
 
   // Handlers for navigation
   const handleNext = () => {
-    var audio = new Audio('click.wav');
-    audio.play();
-    setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length);
+    playAudioFile('click.wav');
+    
+    const nextIndex = (currentIndex + 1) % images.length;
+    setCurrentIndex(nextIndex);
+    
+    // Play corresponding audio if available
+    if (audios && audios[nextIndex]) {
+      playAudioFile(audios[nextIndex]);
+    }
   };
 
   const handlePrev = () => {
-    var audio = new Audio('click.wav');
-    audio.play();
-    setCurrentIndex((prevIndex) => (prevIndex - 1 + images.length) % images.length);
+    playAudioFile('click.wav');
+    
+    const prevIndex = (currentIndex - 1 + images.length) % images.length;
+    setCurrentIndex(prevIndex);
+    
+    // Play corresponding audio if available
+    if (audios && audios[prevIndex]) {
+      playAudioFile(audios[prevIndex]);
+    }
   };
 
   // Get the 3 thumbnail images to show (current + next 2)
