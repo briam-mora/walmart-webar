@@ -7,7 +7,7 @@ const Station6 = ({ position }) => {
   const [selectedAnswer, setSelectedAnswer] = useState(null);
   const [showFeedback, setShowFeedback] = useState(false);
   const [score, setScore] = useState(0);
-  const { playAudioFile } = useAudio();
+  const { playAudio } = useAudio();
 
   const triviaData = [
     {
@@ -57,7 +57,7 @@ const Station6 = ({ position }) => {
     }
     
     // Play click sound
-    playAudioFile('click.wav');
+    playAudio('click');
   };
 
   const handleNextQuestion = () => {
@@ -73,7 +73,7 @@ const Station6 = ({ position }) => {
       setScore(0);
     }
     
-    playAudioFile('click.wav');
+    playAudio('click');
   };
 
   const currentTrivia = triviaData[currentQuestion];

@@ -35,8 +35,10 @@ export function App() {
     let next;
     if (currentStation === -1) {
       next = 0; // Start with first station if all are hidden
+    } else if (currentStation < 6) {
+      next = currentStation + 1; // Go to next station if not at last
     } else {
-      next = (currentStation + 1) % 8;
+      next = currentStation; // Stay at last station
     }
     setCurrentStation(next);
     
@@ -49,7 +51,6 @@ export function App() {
       4: false,
       5: false,
       6: false,
-      7: false,
     });
     
     // Show only the next station
@@ -63,8 +64,10 @@ export function App() {
     let prev;
     if (currentStation === -1) {
       prev = 0;
+    } else if (currentStation > 0) {
+      prev = currentStation - 1; // Go to previous station if not at first
     } else {
-      prev = (currentStation - 1 + 8) % 8;
+      prev = currentStation; // Stay at first station
     }
     setCurrentStation(prev);
     
@@ -77,7 +80,6 @@ export function App() {
       4: false,
       5: false,
       6: false,
-      7: false,
     });
     
     // Show only the previous station
@@ -247,6 +249,8 @@ export function App() {
             {content.images.map(image => <img key={image.id} id={image.id} src={image.src} crossOrigin="anonymous" preload="auto" />)}
             {content.memory.map(card => <img key={card.id} id={card.id} src={card.src} crossOrigin="anonymous" preload="auto" />)}
             {content.memory_win.map(card => <img key={card.id} id={card.id} src={card.src} crossOrigin="anonymous" preload="auto" />)}
+            {content.globos.map(globo => <img key={globo.id} id={globo.id} src={globo.src} crossOrigin="anonymous" preload="auto" />)}
+            {content.plataforma.map(plataforma => <img key={plataforma.id} id={plataforma.id} src={plataforma.src} crossOrigin="anonymous" preload="auto" />)}
             <img id="light-arrow" src="icono.png" crossOrigin="anonymous" preload="auto" />
             <img id="play-button" src="play.png" crossOrigin="anonymous" preload="auto" />
             <img id="pantalla-carga" src="walmart_start.png" crossOrigin="anonymous" preload="auto" />
@@ -280,9 +284,15 @@ export function App() {
             <img id="cardback" src="cardback.png" crossOrigin="anonymous" preload="auto" />
             <img id="date" src="date.png" crossOrigin="anonymous" preload="auto" />
             <video id="video" src="video.mp4" autoPlay={false} loop={false} preload="metadata" style={{background: 'transparent'}}></video>
+            <audio id="click" src="click.wav" preload="auto"></audio>
+            <audio id="feedback_begin" src="feedback_begin.wav" preload="auto"></audio>
+            <audio id="feedback_end" src="feedback_end.wav" preload="auto"></audio>
             <audio src="bienvenida.wav" preload="auto"></audio>
             {content.audios.station_2.map(audio => <audio key={audio.id} id={audio.id} src={audio.src} preload="auto"></audio>)}
             {content.audios.station_3.map(audio => <audio key={audio.id} id={audio.id} src={audio.src} preload="auto"></audio>)}
+            {content.audios.station_4.map(audio => <audio key={audio.id} id={audio.id} src={audio.src} preload="auto"></audio>)}
+            {content.audios.station_5.map(audio => <audio key={audio.id} id={audio.id} src={audio.src} preload="auto"></audio>)}
+            {content.audios.station_7.map(audio => <audio key={audio.id} id={audio.id} src={audio.src} preload="auto"></audio>)}
           </a-assets>
 
           {/* Sky with panorama - fallback when camera is not available */}

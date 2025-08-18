@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import 'aframe';
 import { useAudio } from '../contexts/AudioContext.jsx';
 
-const VideoGallery = ({ videos, position, rotation, scale, closeFunction, width, height }) => {
+const VideoGallery = ({ videos, position, rotation, scale, closeFunction, width, height, stopVideo = false }) => {
   const videoRef = useRef(null); // Reference to the video element
   const { playAudioFile } = useAudio();
 
@@ -39,6 +39,15 @@ const VideoGallery = ({ videos, position, rotation, scale, closeFunction, width,
     }
   };
 
+  // Stop video when component unmounts or stopVideo prop changes
+  useEffect(() => {
+    if (stopVideo && videoRef.current) {
+      videoRef.current.pause();
+      videoRef.current.currentTime = 0;
+      setPlaying(false);
+    }
+  }, [stopVideo]);
+
   useEffect(() => {
     // Ensure the video is loaded and set up
     const videoElement = document.querySelector(videos[currentIndex].src);
@@ -55,6 +64,16 @@ const VideoGallery = ({ videos, position, rotation, scale, closeFunction, width,
       }
     }
   }, [currentIndex, playing]);
+
+  // Cleanup function to stop video when component unmounts
+  useEffect(() => {
+    return () => {
+      if (videoRef.current) {
+        videoRef.current.pause();
+        videoRef.current.currentTime = 0;
+      }
+    };
+  }, []);
 
   return (
     currentIndex !== null && <a-entity

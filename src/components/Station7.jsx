@@ -1,13 +1,18 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useAudio } from '../contexts/AudioContext.jsx';
 
-const Station7 = ({ position }) => {
+const Station7 = () => {
   const [feedback1, setFeedback1] = useState(null);
   const [feedback2, setFeedback2] = useState(null);
   const [name, setName] = useState('');
   const [badgeNumber, setBadgeNumber] = useState('');
   const [submitted, setSubmitted] = useState(false);
-  const { playAudioFile } = useAudio();
+  const { playAudio } = useAudio();
+
+  // Play intro audio when component mounts
+  useEffect(() => {
+    playAudio('feedback_begin');
+  }, [playAudio]);
 
   const handleFeedbackSelect = (questionNumber, value) => {
     if (questionNumber === 1) {
@@ -15,32 +20,92 @@ const Station7 = ({ position }) => {
     } else {
       setFeedback2(value);
     }
-    playAudioFile('click.wav');
+    playAudio('click');
   };
 
-  const handleSubmit = (e) => {
+  const [isUpdating, setIsUpdating] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
+
+  const updateGoogleSheet = async (data) => {
+    try {
+      setIsUpdating(true);
+      
+      // Your Google Apps Script endpoint
+      const scriptUrl = 'https://script.google.com/macros/s/AKfycbz5cAndrRvlRaVDuOmBS6-BJwCFeIKaCr8fQX650-vaWjfI2U6CqqwX6a9frWqjATbn/exec';
+      
+      const response = await fetch(scriptUrl, {
+        method: 'POST',
+        // Remove Content-Type header to avoid CORS issues in production
+        body: JSON.stringify(data)
+      });
+      
+      const result = await response.json();
+      
+      if (result.success) {
+        console.log('Excel updated successfully in Google Drive!');
+        return true;
+      } else {
+        console.error('Server error:', result.error);
+        throw new Error(result.error || 'Failed to update Excel');
+      }
+      
+    } catch (error) {
+      console.error('Error updating Google Sheet:', error);
+      setErrorMessage('Error al enviar datos. Se descargará un archivo local como respaldo.');
+      // Fallback to local download if cloud update fails
+      downloadLocalExcel(data);
+      return false;
+    } finally {
+      setIsUpdating(false);
+    }
+  };
+
+  const downloadLocalExcel = (data) => {
+    // Fallback function to download Excel locally if cloud update fails
+    const excelData = [
+      ['Name', 'Badge Number', 'Onboarding Experience', 'Training Motivation', 'Submission Time'],
+      [
+        data.name,
+        data.badgeNumber,
+        data.onboardingExperience === 'good' ? 'Sí' : data.onboardingExperience === 'mid' ? 'Más o menos' : 'No',
+        data.trainingMotivation === 'good' ? 'Sí' : data.trainingMotivation === 'mid' ? 'Más o menos' : 'No',
+        new Date().toLocaleString('es-ES')
+      ]
+    ];
+
+    const csvContent = excelData.map(row => row.join(',')).join('\n');
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = `feedback-${data.name}-${Date.now()}.csv`;
+    link.click();
+    URL.revokeObjectURL(link.href);
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (feedback1 !== null && feedback2 !== null && name.trim() && badgeNumber.trim()) {
       setSubmitted(true);
-      playAudioFile('click.wav');
+      playAudio('feedback_end');
       
-      // Here you could send the data to your backend
-      console.log('Feedback submitted:', {
+      const formData = {
         onboardingExperience: feedback1,
         trainingMotivation: feedback2,
         name: name.trim(),
         badgeNumber: badgeNumber.trim()
-      });
+      };
+      
+      // Update Google Sheet
+      await updateGoogleSheet(formData);
+      
+      // Here you could send the data to your backend
+      console.log('Feedback submitted:', formData);
     }
   };
 
   const handleReset = () => {
-    setFeedback1(null);
-    setFeedback2(null);
-    setName('');
-    setBadgeNumber('');
-    setSubmitted(false);
-    playAudioFile('click.wav');
+    // Refresh the page to start over
+    window.location.reload();
   };
 
   const getFeedbackLabel = (value) => {
@@ -72,18 +137,16 @@ const Station7 = ({ position }) => {
         <div className="feedback-form-container">
           <div className="feedback-header">
             <img id="banner" src="banner.svg" alt="Banner" className="banner" />
-            <h2 className="feedback-title">¡Gracias por tu feedback!</h2>
+            <h2 className="feedback-title">¡Feedback enviado satisfactoriamente!</h2>
           </div>
           
           <div className="feedback-summary">
-            <p><strong>Experiencia de onboarding:</strong> {getFeedbackLabel(feedback1)}</p>
-            <p><strong>Motivación con la capacitación:</strong> {getFeedbackLabel(feedback2)}</p>
-            <p><strong>Nombre:</strong> {name}</p>
-            <p><strong>Número de gafete:</strong> {badgeNumber}</p>
+            <p>Has completado el proceso de onboarding. Tus respuestas se han guardado en Google Drive.</p>
+            <p>Ya puedes cerrar la aplicación o volver a iniciar el proceso de onboarding.</p>
           </div>
           
           <button className="reset-button" onClick={handleReset}>
-            Enviar otro feedback
+            Volver a iniciar
           </button>
         </div>
       </div>
@@ -177,10 +240,16 @@ const Station7 = ({ position }) => {
           <button 
             type="submit" 
             className="submit-button"
-            disabled={!feedback1 || !feedback2 || !name.trim() || !badgeNumber.trim()}
+            disabled={!feedback1 || !feedback2 || !name.trim() || !badgeNumber.trim() || isUpdating}
           >
-            Enviar
+            {isUpdating ? 'Enviando...' : 'Enviar'}
           </button>
+          
+          {errorMessage && (
+            <div className="error-message">
+              <p>{errorMessage}</p>
+            </div>
+          )}
         </form>
       </div>
     </div>
