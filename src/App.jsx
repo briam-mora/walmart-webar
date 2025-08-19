@@ -285,8 +285,6 @@ export function App() {
             <img id="date" src="date.png" crossOrigin="anonymous" preload="auto" />
             <video id="video" src="video.mp4" autoPlay={false} loop={false} preload="metadata" style={{background: 'transparent'}}></video>
             <audio id="click" src="click.wav" preload="auto"></audio>
-            <audio id="feedback_begin" src="feedback_begin.wav" preload="auto"></audio>
-            <audio id="feedback_end" src="feedback_end.wav" preload="auto"></audio>
             <audio src="bienvenida.wav" preload="auto"></audio>
             {content.audios.station_2.map(audio => <audio key={audio.id} id={audio.id} src={audio.src} preload="auto"></audio>)}
             {content.audios.station_3.map(audio => <audio key={audio.id} id={audio.id} src={audio.src} preload="auto"></audio>)}
