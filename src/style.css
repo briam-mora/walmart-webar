@@ -598,7 +598,7 @@ a-video video {
     align-items: center;
     margin: 0;
     gap: 8px;
-    margin-bottom: 120px;
+    margin-bottom: calc(120px + env(safe-area-inset-bottom));
   }
   
   .video-placeholder {
