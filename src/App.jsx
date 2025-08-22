@@ -243,7 +243,7 @@ export function App() {
                  renderer="alpha: true; antialias: false; premultipliedAlpha: true; logarithmicDepthBuffer: false; colorManagement: true; precision: mediump"
                  onerror="console.error('A-Frame error:', event.detail)"
                  embedded="true"
-                 webgl="antialias: true; alpha: true; depth: true; stencil: true; preserveDrawingBuffer: false; logarithmicDepthBuffer: false">
+                 webgl="antialias: false; alpha: true; depth: true; stencil: true; preserveDrawingBuffer: false; logarithmicDepthBuffer: false">
           <a-camera camera-background look-controls="reverseMouseDrag: true; mouseEnabled: true; touchEnabled: true" wasd-controls-enabled="false" position="0 0 0"></a-camera>
           <a-entity id="raycaster" raycaster="objects: .clickable" cursor="rayOrigin: mouse"></a-entity>
 
