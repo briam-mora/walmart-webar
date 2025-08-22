@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useAudio } from '../contexts/AudioContext.jsx';
 import content from '../content.json';
 
@@ -7,20 +7,14 @@ const Station6 = () => {
   const [selectedAnswer, setSelectedAnswer] = useState(null);
   const [showFeedback, setShowFeedback] = useState(false);
   const [answered, setAnswered] = useState(false);
-  const { playAudio } = useAudio();
+  const [videoFinished, setVideoFinished] = useState(false);
+  const { playAudio, stopAllAudio } = useAudio();
 
   const triviaData = content.trivia;
 
   // Play trivia initial sound when component mounts
   useEffect(() => {
     playAudio('trivia_initial_sound');
-    
-    // Play trivia 1 sound after initial sound
-    const timer = setTimeout(() => {
-      playAudio('trivia_1_sound');
-    }, 3000); // Wait 2 seconds after initial sound
-    
-    return () => clearTimeout(timer);
   }, [playAudio]);
 
   const handleAnswerSelect = (answerIndex) => {
@@ -56,15 +50,11 @@ const Station6 = () => {
       setSelectedAnswer(null);
       setShowFeedback(false);
       setAnswered(false);
-      
-      // Play next question audio
-      const nextTrivia = triviaData[currentQuestion + 1];
-      playAudio(nextTrivia.audio_id);
+      setVideoFinished(false);
     }
   };
 
   const currentTrivia = triviaData[currentQuestion];
-  const isCorrect = selectedAnswer === currentTrivia.correct_option;
   const isLastQuestion = currentQuestion === triviaData.length - 1;
 
   if (!currentTrivia) return null;
@@ -72,21 +62,26 @@ const Station6 = () => {
   return (
     <div className="station-6">
       <div className="trivia-container">
-                  {/* Video Player */}
+                  {/* Video Player - Hidden when showing feedback */}
+        {!showFeedback && (
           <div className="video-section">
             <video 
               className="video-player"
               controls
               autoPlay={false}
-              muted
+              muted={false}
               playsInline
               onError={(e) => console.error('Video error:', e)}
+              onEnded={() => {
+                setVideoFinished(true);
+                playAudio(currentTrivia.audio_id);
+              }}
             >
               <source src={currentTrivia.video_src} type="video/mp4" />
               Your browser does not support the video tag.
             </video>
-
           </div>
+        )}
         
         {/* Question or Feedback */}
         <div className="text-section">
@@ -101,8 +96,10 @@ const Station6 = () => {
                     key={index}
                     className={`option-item ${selectedAnswer === index ? 'selected' : ''} ${
                       answered && index === currentTrivia.correct_option ? 'correct' : ''
-                    } ${answered && selectedAnswer === index && index !== currentTrivia.correct_option ? 'incorrect' : ''}`}
-                    onClick={() => handleAnswerSelect(index)}
+                    } ${answered && selectedAnswer === index && index !== currentTrivia.correct_option ? 'incorrect' : ''} ${
+                      !videoFinished ? 'disabled' : ''
+                    }`}
+                    onClick={() => videoFinished && !answered ? handleAnswerSelect(index) : undefined}
                   >
                     <div className={`checkbox ${selectedAnswer === index ? 'checked' : ''}`}>
                       {selectedAnswer === index && <span className="checkmark">✓</span>}
@@ -126,16 +123,32 @@ const Station6 = () => {
           )}
         </div>
         
-        {/* Answer Button - Outside the text container */}
-        {!showFeedback && !answered && (
+        {/* Play Video Button - Shows initially */}
+        {!videoFinished && (
           <button 
             className="answer-button"
-            onClick={handleSubmitAnswer}
-            disabled={selectedAnswer === null}
+            onClick={() => {
+              // Stop any playing audio using AudioContext
+              stopAllAudio();
+              
+              const video = document.querySelector('.video-player');
+              if (video) video.play();
+            }}
           >
-            Contestar
+            Reproducir video
           </button>
         )}
+        
+                  {/* Answer Button - Shows after video finishes */}
+          {videoFinished && !answered && (
+            <button 
+              className="answer-button"
+              onClick={handleSubmitAnswer}
+              disabled={selectedAnswer === null}
+            >
+              Contestar
+            </button>
+          )}
         
         {/* Next Question Button - Outside the text container */}
         {showFeedback && !isLastQuestion && (

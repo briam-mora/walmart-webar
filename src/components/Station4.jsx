@@ -135,10 +135,11 @@ const Station4 = ({ position }) => {
   const getCardPosition = (index) => {
     const row = Math.floor(index / 3);
     const col = index % 3;
-    const spacing = 0.8;
+    const spacing_x = 0.6;
+    const spacing_y = 0.8;
     return {
-      x: (col - 1) * spacing,
-      y: (1.5 - row) * spacing,
+      x: (col - 1) * spacing_x,
+      y: (1.5 - row) * spacing_y,
       z: 0
     };
   };

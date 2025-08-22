@@ -23,7 +23,6 @@ AFRAME.registerComponent('camera-background', {
       if (this.isMobile) {
         if (!this.isSecure) {
           console.log('Camera access requires HTTPS. Using fallback background.');
-          this.showHttpsMessage();
           this.fallbackToImage();
         } else {
           console.log('Mobile + HTTPS detected, setting up camera request...');
@@ -186,17 +185,6 @@ AFRAME.registerComponent('camera-background', {
       sky.setAttribute('position', '0 0 0');
       sky.setAttribute('scale', '1 1 1');
     }
-  },
-
-  showHttpsMessage: function () {
-    // Create a text entity to show HTTPS requirement message
-    const message = document.createElement('a-text');
-    message.setAttribute('value', 'Camera AR requires HTTPS\nUse ngrok or deploy to test');
-    message.setAttribute('position', '0 0.5 -1');
-    message.setAttribute('align', 'center');
-    message.setAttribute('color', '#FFD200');
-    message.setAttribute('width', '4');
-    this.el.sceneEl.appendChild(message);
   },
 
   showPermissionDeniedMessage: function () {
