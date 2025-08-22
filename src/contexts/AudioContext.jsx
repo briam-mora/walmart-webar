@@ -14,21 +14,24 @@ export const AudioProvider = ({ children }) => {
   const currentAudioRef = useRef(null);
   const currentAudioObjectRef = useRef(null);
 
-  const playAudio = useCallback((audioId) => {
-    // Stop current audio if playing
-    if (currentAudioRef.current && currentAudioRef.current !== audioId) {
-      const currentAudio = document.getElementById(currentAudioRef.current);
-      if (currentAudio) {
-        currentAudio.pause();
-        currentAudio.currentTime = 0;
+  const playAudio = useCallback((audioId, nonBlocking = false) => {
+    // If nonBlocking is true, don't stop current audio
+    if (!nonBlocking) {
+      // Stop current audio if playing
+      if (currentAudioRef.current && currentAudioRef.current !== audioId) {
+        const currentAudio = document.getElementById(currentAudioRef.current);
+        if (currentAudio) {
+          currentAudio.pause();
+          currentAudio.currentTime = 0;
+        }
       }
-    }
 
-    // Stop current Audio object if playing
-    if (currentAudioObjectRef.current) {
-      currentAudioObjectRef.current.pause();
-      currentAudioObjectRef.current.currentTime = 0;
-      currentAudioObjectRef.current = null;
+      // Stop current Audio object if playing
+      if (currentAudioObjectRef.current) {
+        currentAudioObjectRef.current.pause();
+        currentAudioObjectRef.current.currentTime = 0;
+        currentAudioObjectRef.current = null;
+      }
     }
 
     // Play new audio
@@ -36,7 +39,10 @@ export const AudioProvider = ({ children }) => {
     if (audio) {
       audio.currentTime = 0;
       audio.play().catch(e => console.log('Audio play failed:', e));
-      currentAudioRef.current = audioId;
+      // Only update currentAudioRef if not nonBlocking
+      if (!nonBlocking) {
+        currentAudioRef.current = audioId;
+      }
     }
   }, []);
 

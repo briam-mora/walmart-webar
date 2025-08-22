@@ -7,6 +7,8 @@ const Station4 = ({ position }) => {
   const [flippedCards, setFlippedCards] = useState([]);
   const [matchedPairs, setMatchedPairs] = useState([]);
   const [visibleWinImages, setVisibleWinImages] = useState([]);
+  const [gameWon, setGameWon] = useState(false);
+  const [isProcessing, setIsProcessing] = useState(false);
 
   // Play intro sound when component mounts
   useEffect(() => {
@@ -43,8 +45,20 @@ const Station4 = ({ position }) => {
   const handleCardClick = (cardId) => {
     const card = cards.find(c => c.id === cardId);
     
-    // Don't allow clicking on already flipped or matched cards
-    if (card.isFlipped || matchedPairs.includes(card.pairId)) {
+    // Don't allow clicking if:
+    // 1. Card is already flipped
+    // 2. Card is already matched
+    // 3. We're currently processing a match (2 cards flipped)
+    // 4. Game is won
+    if (card.isFlipped || 
+        matchedPairs.includes(card.pairId) || 
+        isProcessing || 
+        gameWon) {
+      return;
+    }
+
+    // Don't allow clicking if we already have 2 cards flipped
+    if (flippedCards.length >= 2) {
       return;
     }
 
@@ -55,7 +69,7 @@ const Station4 = ({ position }) => {
     setCards(updatedCards);
     
     // Play flip sound
-    playAudio('audio_flip');
+    playAudio('audio_flip', true);
 
     // Add to flipped cards
     const newFlippedCards = [...flippedCards, cardId];
@@ -63,6 +77,8 @@ const Station4 = ({ position }) => {
 
     // Check for match if we have 2 flipped cards
     if (newFlippedCards.length === 2) {
+      setIsProcessing(true);
+      
       const [firstId, secondId] = newFlippedCards;
       const firstCard = updatedCards.find(c => c.id === firstId);
       const secondCard = updatedCards.find(c => c.id === secondId);
@@ -71,6 +87,7 @@ const Station4 = ({ position }) => {
         // Match found!
         setMatchedPairs(prev => [...prev, firstCard.pairId]);
         setFlippedCards([]);
+        setIsProcessing(false);
         
         // Play pair found sound for the specific card
         const cardData = content.memory.find(card => card.id === firstCard.pairId);
@@ -83,6 +100,7 @@ const Station4 = ({ position }) => {
         
         // Check if game is won
         if (matchedPairs.length + 1 === content.memory.length) {
+          setGameWon(true);
           // Play game won sound
           playAudio('audio_win');
         }
@@ -95,6 +113,7 @@ const Station4 = ({ position }) => {
             )
           );
           setFlippedCards([]);
+          setIsProcessing(false);
         }, 1000);
       }
     }
@@ -109,6 +128,7 @@ const Station4 = ({ position }) => {
     setMatchedPairs([]);
     setGameWon(false);
     setVisibleWinImages([]);
+    setIsProcessing(false);
   };
 
   // Grid layout: 4 rows x 3 columns (12 cards total - 6 pairs)
@@ -125,21 +145,12 @@ const Station4 = ({ position }) => {
 
   return (
     <a-entity id="station-4" position={position}>
-      {/* Game Title */}
-      <a-text
-        value="Juego de Memoria"
-        position="0 2.5 0"
-        color="#000080"
-        font="kelsonsans"
-        align="center"
-        width="4"
-        scale="0.8 0.8 1"
-      />
 
       {/* Memory Cards Grid */}
       {cards.map((card, index) => {
         const pos = getCardPosition(index);
         const isFlipped = card.isFlipped || matchedPairs.includes(card.pairId);
+        const isClickable = !isFlipped && !isProcessing && !gameWon && flippedCards.length < 2 && visibleWinImages.length === 0;
         
         return (
           <a-entity key={card.id} position={`${pos.x} ${pos.y} ${pos.z}`}>
@@ -150,9 +161,9 @@ const Station4 = ({ position }) => {
                 position="0 0 0"
                 width="0.6"
                 height="0.8"
-                class="clickable"
-                onClick={() => handleCardClick(card.id)}
-                material="shader: flat"
+                class={isClickable ? "clickable" : ""}
+                onClick={isClickable ? () => handleCardClick(card.id) : undefined}
+                material={`shader: flat; opacity: ${isClickable ? 1 : 0.5}`}
                 transparent="true"
               />
             )}
@@ -174,13 +185,13 @@ const Station4 = ({ position }) => {
 
       {/* Win Images for Matched Pairs */}
       {visibleWinImages.map((pairId) => (
-        <a-entity key={`win-${pairId}`} position="0 0 1">
+        <a-entity key={`win-${pairId}`} position="0 0 2">
           <a-plane
             src={`#${pairId}_win`}
             position="0 0 0"
-            scale="0.6 0.6 0.6"
+            scale="0.2 0.2 0.2"
             width="2"
-            height="2.5"
+            height="2.3"
             class="clickable"
             onClick={() => {
               setVisibleWinImages(prev => prev.filter(id => id !== pairId));

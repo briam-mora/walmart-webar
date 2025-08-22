@@ -176,14 +176,15 @@ export function App() {
             {/* Previous Button */}
             <button 
               onClick={prevStation}
+              disabled={currentStation <= 0}
               style={{
-                background: '#4169E1',
+                background: currentStation <= 0 ? '#cccccc' : '#4169E1',
                 color: 'white',
                 border: 'none',
                 borderRadius: '50%',
                 width: '40px',
                 height: '40px',
-                cursor: 'pointer',
+                cursor: currentStation <= 0 ? 'not-allowed' : 'pointer',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
@@ -191,7 +192,8 @@ export function App() {
                 fontWeight: 'bold',
                 transition: 'all 0.2s ease',
                 minWidth: '40px',
-                minHeight: '40px'
+                minHeight: '40px',
+                opacity: currentStation <= 0 ? 0.6 : 1
               }}
             >
               ‹
@@ -212,14 +214,15 @@ export function App() {
             {/* Next Button */}
             <button 
               onClick={nextStation}
+              disabled={currentStation >= 6}
               style={{
-                background: '#4169E1',
+                background: currentStation >= 6 ? '#cccccc' : '#4169E1',
                 color: 'white',
                 border: 'none',
                 borderRadius: '50%',
                 width: '40px',
                 height: '40px',
-                cursor: 'pointer',
+                cursor: currentStation >= 6 ? 'not-allowed' : 'pointer',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
@@ -227,7 +230,8 @@ export function App() {
                 fontWeight: 'bold',
                 transition: 'all 0.2s ease',
                 minWidth: '40px',
-                minHeight: '40px'
+                minHeight: '40px',
+                opacity: currentStation >= 6 ? 0.6 : 1
               }}
             >
               ›
@@ -244,7 +248,7 @@ export function App() {
           <a-entity id="raycaster" raycaster="objects: .clickable" cursor="rayOrigin: mouse"></a-entity>
 
           {/* Load assets */}
-          <a-assets>
+          <a-assets timeout="30000">
             <img id="panorama" src="panorama.webp" crossOrigin="anonymous" />
             {content.images.map(image => <img key={image.id} id={image.id} src={image.src} crossOrigin="anonymous" preload="auto" />)}
             {content.memory.map(card => <img key={card.id} id={card.id} src={card.src} crossOrigin="anonymous" preload="auto" />)}
@@ -257,40 +261,17 @@ export function App() {
             <img id="celular" src="celular.png" crossOrigin="anonymous" preload="auto" />
             <img id="celular-flechas" src="celular-flechas.png" crossOrigin="anonymous" preload="auto" />
             <img id="celular-instrucciones" src="celular-instrucciones.png" crossOrigin="anonymous" preload="auto" />
-            <img id="video-titulo" src="shell_AR_logo.png" crossOrigin="anonymous" preload="auto" />
-            <img id="panelistas-video-titulo" src="titulo_panelistas_galeria.png" crossOrigin="anonymous" preload="auto" />
-            <img id="panelists-button" src="titulo_panelistas.png" crossOrigin="anonymous" preload="auto" />
-            <img id="characteristics-background" src="shell_bg.png" crossOrigin="anonymous" preload="auto" />
-            <img id="characteristics-title" src="back-equipo.png" crossOrigin="anonymous" preload="auto" />
-            <img id="panelists-text" src="nuevo-small_back_panelista.png" crossOrigin="anonymous" preload="auto" />
-            <img id="characteristics-button" src="art_shell-18.png" crossOrigin="anonymous" preload="auto" />
-            <img id="characteristics-arrow" src="art_shell-23.png" crossOrigin="anonymous" preload="auto" />
-            <img id="characteristics-1" src="art_shell-19.png" crossOrigin="anonymous" preload="auto" />
-            <img id="characteristics-2" src="shell_AR-41.png" crossOrigin="anonymous" preload="auto" />
-            <img id="characteristics-3" src="shell_AR-40.png" crossOrigin="anonymous" preload="auto" />
-            <img id="characteristics-4" src="art_shell-22.png" crossOrigin="anonymous" preload="auto" />
-            <img id="ambient1" src="palabras_flotantes-COLOR-32.png" crossOrigin="anonymous" preload="auto" />
-            <img id="ambient2" src="palabras_flotantes-COLOR-33.png" crossOrigin="anonymous" preload="auto" />
-            <img id="ambient3" src="palabras_flotantes-COLOR-34.png" crossOrigin="anonymous" preload="auto" />
-            <img id="agil" src="palabras_flotantes-COLOR-35.png" crossOrigin="anonymous" preload="auto" />
-            <img id="simple" src="palabras_flotantes-COLOR-36.png" preload="auto" />
-            <img id="impacto" src="palabras_flotantes-COLOR-37.png" crossOrigin="anonymous" preload="auto" />
-            <img id="ambient1" src="palabras_flotantes-COLOR-32.png" crossOrigin="anonymous" preload="auto" />
-            <img id="evolucion" src="palabras_flotantes-COLOR-38.png" crossOrigin="anonymous" preload="auto" />
-            <img id="evolucionshell" src="palabras_flotantes-COLOR-39.png" crossOrigin="anonymous" preload="auto" />
             <img id="next" src="next.png" crossOrigin="anonymous" preload="auto" />
             <img id="prev" src="prev.png" crossOrigin="anonymous" preload="auto" />
             <img id="close" src="close.png" crossOrigin="anonymous" preload="auto" />
             <img id="cardback" src="cardback.png" crossOrigin="anonymous" preload="auto" />
-            <img id="date" src="date.png" crossOrigin="anonymous" preload="auto" />
             <video id="video" src="video.mp4" autoPlay={false} loop={false} preload="metadata" style={{background: 'transparent'}}></video>
             <audio id="click" src="click.wav" preload="auto"></audio>
-            <audio src="bienvenida.wav" preload="auto"></audio>
-            {content.audios.station_2.map(audio => <audio key={audio.id} id={audio.id} src={audio.src} preload="auto"></audio>)}
-            {content.audios.station_3.map(audio => <audio key={audio.id} id={audio.id} src={audio.src} preload="auto"></audio>)}
-            {content.audios.station_4.map(audio => <audio key={audio.id} id={audio.id} src={audio.src} preload="auto"></audio>)}
-            {content.audios.station_5.map(audio => <audio key={audio.id} id={audio.id} src={audio.src} preload="auto"></audio>)}
-            {content.audios.station_7.map(audio => <audio key={audio.id} id={audio.id} src={audio.src} preload="auto"></audio>)}
+            {content.audios.station_2.map(audio => <audio key={audio.id} id={audio.id} src={audio.src} preload="none"></audio>)}
+            {content.audios.station_3.map(audio => <audio key={audio.id} id={audio.id} src={audio.src} preload="none"></audio>)}
+            {content.audios.station_4.map(audio => <audio key={audio.id} id={audio.id} src={audio.src} preload="none"></audio>)}
+            {content.audios.station_5.map(audio => <audio key={audio.id} id={audio.id} src={audio.src} preload="none"></audio>)}
+            {content.audios.station_7.map(audio => <audio key={audio.id} id={audio.id} src={audio.src} preload="none"></audio>)}
           </a-assets>
 
           {/* Sky with panorama - fallback when camera is not available */}
@@ -305,14 +286,6 @@ export function App() {
             material="shader: flat"
             onClick={(e) => {
               setStarted(true);
-              // var audio = new Audio('shell_musica.wav');
-              // audio.loop = true; // Enable looping
-              // audio.play();
-              // audio.volume = 0.2;
-              // var voice = new Audio('LOC2.wav');
-              // voice.play();
-              // var button = new Audio('boton.wav');
-              // button.play();
               e.target.setAttribute("scale", "0 0 0")
               nextStation();
             }}
