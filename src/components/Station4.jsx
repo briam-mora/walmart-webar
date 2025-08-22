@@ -102,7 +102,7 @@ const Station4 = ({ position }) => {
         if (matchedPairs.length + 1 === content.memory.length) {
           setGameWon(true);
           // Play game won sound
-          playAudio('audio_win');
+          playAudio('audio_win', true);
         }
       } else {
         // No match, flip cards back after delay

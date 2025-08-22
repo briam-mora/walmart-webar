@@ -283,14 +283,50 @@ a-video video {
 
 /* Responsive adjustments */
 @media (max-width: 480px) {
+  /* Make background cover full screen on mobile */
+  html, body, #root {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+  }
+  
+  /* Ensure A-Frame scene covers full mobile screen */
+  .a-canvas {
+    width: 100vw !important;
+    height: 100vh !important;
+  }
+  
+  /* Station 7 mobile adjustments */
   .station-7 {
-    width: 98vw;
-    max-width: 98vw;
+    width: 100vw;
+    max-width: 100vw;
+    height: 100vh;
+    top: 0 !important;
+    left: 0 !important;
+    transform: none !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
   
   .feedback-form-container {
     padding: 12px;
     padding-top: 25px;
+    width: 100%;
+    height: 100%;
+    border-radius: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+  }
+  
+  .feedback-header {
+    margin-bottom: 15px;
   }
   
   .feedback-title {
@@ -323,6 +359,8 @@ a-video video {
   
   .feedback-form {
     gap: 18px;
+    width: 100%;
+    max-width: 300px;
   }
   
   .input-group label {
@@ -337,6 +375,16 @@ a-video video {
   .submit-button {
     padding: 10px 20px;
     font-size: 15px;
+  }
+  
+  /* Ensure banner fits mobile screen */
+  .banner {
+    position: fixed !important;
+    width: 100vw !important;
+    left: 50% !important;
+    top: 0 !important;
+    transform: translateX(-50%) !important;
+    z-index: 1;
   }
 }
 
