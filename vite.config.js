@@ -39,7 +39,16 @@ export default {
         },
         fs: {
             allow: ['..'] // Allow serving files from parent directory
-        }
+        },
+        // Ensure video files are served with correct MIME types
+        middlewares: [
+            (req, res, next) => {
+                if (req.url.endsWith('.mp4')) {
+                    res.setHeader('Content-Type', 'video/mp4');
+                }
+                next();
+            }
+        ]
     },
     build:
     {
@@ -48,7 +57,7 @@ export default {
         sourcemap: true, // Add sourcemap
         assetsInlineLimit: 0 // Don't inline GLB files
     },
-    assetsInclude: ['**/*.glb'], // Explicitly include GLB files
+    assetsInclude: ['**/*.glb', '**/*.mp4'], // Explicitly include GLB and MP4 files
     optimizeDeps: {
         include: ['aframe'] // Pre-bundle A-Frame
     }

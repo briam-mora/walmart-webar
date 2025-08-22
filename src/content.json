@@ -73,7 +73,19 @@
             {"id":"plataforma_4_sound", "src": "sounds/station_5/4ULearn.mp3"},
             {"id":"plataforma_5_sound", "src": "sounds/station_5/5Fin.mp3"}
         ],
-        "station_6": [],
+        "station_6": [
+            {"id":"trivia_initial_sound", "src": "sounds/station_6/LocE6_1.mp3"},
+            {"id":"trivia_1_sound", "src": "sounds/station_6/LocE6_2.mp3"},
+            {"id":"trivia_1_correct_sound", "src": "sounds/station_6/LocE6_3.mp3"},
+            {"id":"trivia_2_sound", "src": "sounds/station_6/LocE6_5.mp3"},
+            {"id":"trivia_2_correct_sound", "src": "sounds/station_6/LocE6_6.mp3"},
+            {"id":"trivia_3_sound", "src": "sounds/station_6/LocE6_8.mp3"},
+            {"id":"trivia_3_correct_sound", "src": "sounds/station_6/LocE6_9.mp3"},
+            {"id":"trivia_4_sound", "src": "sounds/station_6/LocE6_11.mp3"},
+            {"id":"trivia_4_correct_sound", "src": "sounds/station_6/LocE6_12.mp3"},
+            {"id":"trivia_5_sound", "src": "sounds/station_6/LocE6_14.mp3"},
+            {"id":"trivia_5_correct_sound", "src": "sounds/station_6/LocE6_15.mp3"}
+        ],
         "station_7": [
             {"id":"feedback_begin", "src": "sounds/station_7/cuentanos.mp3"},
             {"id":"feedback_end", "src": "sounds/station_7/inicio.mp3"}
@@ -87,5 +99,72 @@
         {"id": 4, "name": "Plataforma"},
         {"id": 5, "name": "Trivia"},
         {"id": 6, "name": "Encuesta"}
+    ],
+    "trivia":[
+        {
+            "id":"trivia_1", 
+            "video_src": "Trivia1Hombre.mp4", 
+            "audio_id": "trivia_1_sound", 
+            "correct_audio_id": "trivia_1_correct_sound", 
+            "question": "¿Cómo se define la cultura de Walmart?", 
+            "options": [
+                "Como un conjunto de reglas internas.", 
+                "Como una guía de liderazgo operativo.", 
+                "Como nuestros valores en acción."], 
+            "correct_option": 2,
+            "correct_option_text": "¡Correcto! Definimos la cultura como nuestros valores en acción.\n\nBuscamos ofrecer un excelente servicio al cliente, un buen ambiente laboral y un alto desempeño para cumplir con nuestro propósito de ahorrar dinero a las personas para que puedan vivir mejor."
+        },
+        {
+            "id":"trivia_2", 
+            "video_src": "Trivia1Mujer.mp4", 
+            "audio_id": "trivia_2_sound", 
+            "correct_audio_id": "trivia_2_correct_sound", 
+            "question": "¿Cuál de estos comportamientos refleja el valor Servicio al cliente en Walmart?", 
+            "options": [
+                "Evitar riesgos para mantener estabilidad", 
+                "Escuchar, anticipar y atender las necesidades del cliente", 
+                "Enfocarse solo en resultados internos"], 
+            "correct_option": 1,
+            "correct_option_text": "¡Correcto! ¡Recuerda! El cliente es primero: Siempre escucha, anticipa y atiende las necesidades de los clientes y clientas."
+        },
+        {
+            "id":"trivia_3", 
+            "video_src": "Trivia2Hombre.mp4", 
+            "audio_id": "trivia_3_sound", 
+            "correct_audio_id": "trivia_3_correct_sound", 
+            "question": "¿Cuál de estos comportamientos refleja el valor Respeto por el individuo en Walmart?", 
+            "options": [
+                "Evitar dar retroalimentación para no incomodar", 
+                "Colaborar con otros, escucha y aceptar las diferencias, ideas y experiencias.", 
+                "Delegar tareas sin explicar cómo hacerlas"], 
+            "correct_option": 1,
+            "correct_option_text": "¡Correcto! El respeto por el individuo implica colaborar con otros y estar abierto a la retroalimentación, además de escuchar y aceptar las diferencias, ideas y experiencias de todos y todas. ¡Siempre lidera con el ejemplo!"
+        },
+        {
+            "id":"trivia_4", 
+            "video_src": "Trivia2Mujer.mp4", 
+            "audio_id": "trivia_4_sound", 
+            "correct_audio_id": "trivia_4_correct_sound", 
+            "question": "¿Qué significa luchar por la excelencia en Walmart?", 
+            "options": [
+                "Alto rendimiento, asumir responsabilidades y tomar decisiones estratégicas.", 
+                "Trabajar con mi propia estrategia sin consultar a nadie.", 
+                "Delegar todo mi trabajo."], 
+            "correct_option": 0,
+            "correct_option_text": "¡Correcto! Luchar por la excelencia significa mantener un alto nivel de desempeño, estableciendo y alcanzando nuestros objetivos, asumiendo la responsabilidad de nuestras acciones, celebrando los logros y tomando decisiones estratégicas que impulsen el éxito."
+        },
+        {
+            "id":"trivia_5", 
+            "video_src": "Trivia3Mujer.mp4", 
+            "audio_id": "trivia_5_sound", 
+            "correct_audio_id": "trivia_5_correct_sound", 
+            "question": "¿Qué representa actuar con integridad en Walmart?", 
+            "options": [
+                "Evitar decisiones difíciles para no generar conflictos", 
+                "Decir la verdad, ser transparente y tener valentía para hacer lo correcto", 
+                "Aceptar todo tipo de negociación, aunque no cumpla con las políticas de la compañía."], 
+            "correct_option": 1,
+            "correct_option_text": "¡Correcto! Actuar con integridad significa cumplir con las políticas y leyes, decir la verdad, ser transparente y tener valentía para hacer lo correcto."
+        }
     ]
 }

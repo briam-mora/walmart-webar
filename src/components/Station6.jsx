@@ -1,63 +1,53 @@
-import React, { useState } from 'react';
-import VideoGallery from './VideoGallery.jsx';
+import React, { useState, useEffect } from 'react';
 import { useAudio } from '../contexts/AudioContext.jsx';
+import content from '../content.json';
 
-const Station6 = ({ position }) => {
+const Station6 = () => {
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [selectedAnswer, setSelectedAnswer] = useState(null);
   const [showFeedback, setShowFeedback] = useState(false);
-  const [score, setScore] = useState(0);
+  const [answered, setAnswered] = useState(false);
   const { playAudio } = useAudio();
 
-  const triviaData = [
-    {
-      id: 1,
-      question: "¿Cuál es el valor fundamental de Walmart?",
-      options: [
-        "Excelencia en el servicio al cliente",
-        "Innovación tecnológica",
-        "Sostenibilidad ambiental",
-        "Expansión global"
-      ],
-      correctAnswer: 0,
-      explanation: "Walmart se enfoca en la excelencia del servicio al cliente como su valor fundamental, buscando siempre superar las expectativas de los consumidores."
-    },
-    {
-      id: 2,
-      question: "¿Qué caracteriza la cultura de Walmart?",
-      options: [
-        "Jerarquía estricta y formal",
-        "Colaboración y trabajo en equipo",
-        "Competencia individual",
-        "Autonomía total"
-      ],
-      correctAnswer: 1,
-      explanation: "La cultura de Walmart se caracteriza por la colaboración y el trabajo en equipo, donde cada empleado contribuye al éxito colectivo de la empresa."
-    },
-    {
-      id: 3,
-      question: "¿Cuál es la misión principal de Walmart?",
-      options: [
-        "Ser la empresa más grande del mundo",
-        "Ahorrar dinero a las personas para que vivan mejor",
-        "Innovar en tecnología retail",
-        "Expandirse a todos los países"
-      ],
-      correctAnswer: 1,
-      explanation: "La misión principal de Walmart es ahorrar dinero a las personas para que puedan vivir mejor, ofreciendo productos de calidad a precios accesibles."
-    }
-  ];
+  const triviaData = content.trivia;
+
+  // Play trivia initial sound when component mounts
+  useEffect(() => {
+    playAudio('trivia_initial_sound');
+    
+    // Play trivia 1 sound after initial sound
+    const timer = setTimeout(() => {
+      playAudio('trivia_1_sound');
+    }, 3000); // Wait 2 seconds after initial sound
+    
+    return () => clearTimeout(timer);
+  }, [playAudio]);
 
   const handleAnswerSelect = (answerIndex) => {
-    setSelectedAnswer(answerIndex);
-    setShowFeedback(true);
+    if (answered) return; // Prevent changing answer after submission
     
-    if (answerIndex === triviaData[currentQuestion].correctAnswer) {
-      setScore(score + 1);
+    setSelectedAnswer(answerIndex);
+  };
+
+  const handleSubmitAnswer = () => {
+    if (selectedAnswer === null) return;
+    
+    setAnswered(true);
+    
+    const currentTrivia = triviaData[currentQuestion];
+    const isCorrect = selectedAnswer === currentTrivia.correct_option;
+    
+    // Play win or lose sound
+    if (isCorrect) {
+      playAudio('audio_win');
     }
     
-    // Play click sound
-    playAudio('click');
+    // Show feedback after 3 seconds
+    setTimeout(() => {
+      setShowFeedback(true);
+      // Always play correct answer sound when feedback appears (regardless of user's answer)
+      playAudio(currentTrivia.correct_audio_id);
+    }, 3000);
   };
 
   const handleNextQuestion = () => {
@@ -65,219 +55,99 @@ const Station6 = ({ position }) => {
       setCurrentQuestion(currentQuestion + 1);
       setSelectedAnswer(null);
       setShowFeedback(false);
-    } else {
-      // Quiz completed, reset to first question
-      setCurrentQuestion(0);
-      setSelectedAnswer(null);
-      setShowFeedback(false);
-      setScore(0);
+      setAnswered(false);
+      
+      // Play next question audio
+      const nextTrivia = triviaData[currentQuestion + 1];
+      playAudio(nextTrivia.audio_id);
     }
-    
-    playAudio('click');
   };
 
   const currentTrivia = triviaData[currentQuestion];
-  const isCorrect = selectedAnswer === currentTrivia.correctAnswer;
-  
-  // Debug logging
-  console.log('Station6 Debug:', {
-    currentQuestion,
-    optionsCount: currentTrivia.options.length,
-    options: currentTrivia.options,
-    showFeedback,
-    selectedAnswer
-  });
+  const isCorrect = selectedAnswer === currentTrivia.correct_option;
+  const isLastQuestion = currentQuestion === triviaData.length - 1;
+
+  if (!currentTrivia) return null;
 
   return (
-    <a-entity id="station-6" position={position} scale="0.1 0.1 0.1">
-      {/* Full Background */}
-      <a-plane
-        position="0 0 0"
-        width="20"
-        height="20"
-        color="#1e3a8a"
-        opacity="1"
-        material="shader: flat"
-      />
+    <div className="station-6">
+      <div className="trivia-container">
+                  {/* Video Player */}
+          <div className="video-section">
+            <video 
+              className="video-player"
+              controls
+              autoPlay={false}
+              muted
+              playsInline
+              onError={(e) => console.error('Video error:', e)}
+            >
+              <source src={currentTrivia.video_src} type="video/mp4" />
+              Your browser does not support the video tag.
+            </video>
 
-      {/* Video Player Container */}
-      <a-plane
-        position="0 4 0"
-        width="18"
-        height="14"
-        color="#1e3a8a"
-        opacity="0.9"
-        material="shader: flat"
-        radius="0.3"
-      />
-
-      {/* Video Gallery */}
-      <VideoGallery
-        videos={[{ src: "#video", autoplay: false }]}
-        position="0 4 0"
-        rotation="0 0 0"
-        scale="8 8 8"
-        width="16"
-        height="12"
-      />
-
-      {/* Trivia Container */}
-      <a-plane
-        position="0 -5 0"
-        width="18"
-        height="3"
-        color="#1e3a8a"
-        opacity="0.9"
-        material="shader: flat"
-        radius="0.3"
-      />
-
-      {/* Header */}
-      <a-text
-        value="Trivia Walmart"
-        position="0 -3.8 0.01"
-        align="center"
-        width="16"
-        color="#ffffff"
-        font="kelsonsans"
-        scale="0.6 0.6 1"
-      />
-
-      {/* Question Section */}
-      {!showFeedback && (
-        <a-entity position="0 -4.2 0.01">
-          {/* Debug: Show options count */}
-          <a-text
-            value={`Debug: ${currentTrivia.options.length} options`}
-            position="0 0.8 0.01"
-            align="center"
-            width="16"
-            color="#ffff00"
-            font="kelsonsans"
-            scale="0.3 0.3 1"
-          />
-          
-          {/* Question Text */}
-          <a-text
-            value={currentTrivia.question}
-            position="0 0.2 0.01"
-            align="center"
-            width="16"
-            color="#ffffff"
-            font="kelsonsans"
-            scale="0.35 0.35 1"
-          />
-
-          {/* Answer Options */}
-          {currentTrivia.options.map((option, index) => (
-            <a-entity key={index} position="0 ${0.1 - index * 0.4} 0.01">
-              {/* Debug: Red sphere to show position */}
-              <a-sphere
-                position="0 0 0.02"
-                radius="0.1"
-                color="#00ff00"
-                material="shader: flat"
-              />
+          </div>
+        
+        {/* Question or Feedback */}
+        <div className="text-section">
+          {!showFeedback ? (
+            <>
+              <h3 className="question-text">{currentTrivia.question}</h3>
               
-              {/* Option Background */}
-              <a-plane
-                position="0 0 0"
-                width="16"
-                height="0.3"
-                color="#ff0000"
-                opacity="1"
-                material="shader: flat"
-                onClick={() => handleAnswerSelect(index)}
-                class="clickable"
-              />
-              
-              {/* Option Text */}
-              <a-text
-                value={option}
-                position="0 0 0.01"
-                align="center"
-                width="15"
-                color="#ffffff"
-                font="kelsonsans"
-                scale="0.25 0.25 1"
-              />
-            </a-entity>
-          ))}
-        </a-entity>
-      )}
-
-      {/* Feedback Section */}
-      {showFeedback && (
-        <a-entity position="0 -4.2 0.01">
-          {/* Result Text */}
-          <a-text
-            value={isCorrect ? "¡Correcto!" : "Incorrecto"}
-            position="0 0.3 0.01"
-            align="center"
-            width="16"
-            color={isCorrect ? "#10b981" : "#ef4444"}
-            font="kelsonsans"
-            scale="0.5 0.5 1"
-          />
-
-          {/* Explanation */}
-          <a-text
-            value={currentTrivia.explanation}
-            position="0 0 0.01"
-            align="center"
-            width="16"
-            color="#ffffff"
-            font="kelsonsans"
-            scale="0.3 0.3 1"
-          />
-
-          {/* Next Question Button */}
-          <a-plane
-            position="0 -0.3 0"
-            width="6"
-            height="0.4"
-            color="#ffffff"
-            material="shader: flat"
+              {/* Options */}
+              <div className="options-container">
+                {currentTrivia.options.map((option, index) => (
+                  <div 
+                    key={index}
+                    className={`option-item ${selectedAnswer === index ? 'selected' : ''} ${
+                      answered && index === currentTrivia.correct_option ? 'correct' : ''
+                    } ${answered && selectedAnswer === index && index !== currentTrivia.correct_option ? 'incorrect' : ''}`}
+                    onClick={() => handleAnswerSelect(index)}
+                  >
+                    <div className={`checkbox ${selectedAnswer === index ? 'checked' : ''}`}>
+                      {selectedAnswer === index && <span className="checkmark">✓</span>}
+                    </div>
+                    <span className="option-text">{option}</span>
+                  </div>
+                ))}
+              </div>
+            </>
+          ) : (
+            <>
+              {/* Feedback Text */}
+              <div className="feedback-text">
+                {currentTrivia.correct_option_text.split('\n').map((line, index) => (
+                  <p key={index} className={index === 0 ? 'feedback-title' : 'feedback-body'}>
+                    {line}
+                  </p>
+                ))}
+              </div>
+            </>
+          )}
+        </div>
+        
+        {/* Answer Button - Outside the text container */}
+        {!showFeedback && !answered && (
+          <button 
+            className="answer-button"
+            onClick={handleSubmitAnswer}
+            disabled={selectedAnswer === null}
+          >
+            Contestar
+          </button>
+        )}
+        
+        {/* Next Question Button - Outside the text container */}
+        {showFeedback && !isLastQuestion && (
+          <button 
+            className="next-button"
             onClick={handleNextQuestion}
-            class="clickable"
-          />
-          
-          <a-text
-            value={currentQuestion < triviaData.length - 1 ? "Siguiente pregunta" : "Reiniciar trivia"}
-            position="0 -0.3 0.01"
-            align="center"
-            width="5"
-            color="#1e3a8a"
-            font="kelsonsans"
-            scale="0.35 0.35 1"
-          />
-        </a-entity>
-      )}
-
-      {/* Progress Indicator */}
-      <a-text
-        value={`Pregunta ${currentQuestion + 1} de ${triviaData.length}`}
-        position="0 -6.8 0.01"
-        align="center"
-        width="16"
-        color="#ffffff"
-        font="kelsonsans"
-        scale="0.3 0.3 1"
-      />
-
-      {/* Score Display */}
-      <a-text
-        value={`Puntuación: ${score}/${triviaData.length}`}
-        position="0 -7.1 0.01"
-        align="center"
-        width="16"
-        color="#10b981"
-        font="kelsonsans"
-        scale="0.3 0.3 1"
-      />
-
-
-    </a-entity>
+          >
+            Siguiente pregunta
+          </button>
+        )}
+      </div>
+    </div>
   );
 };
 
