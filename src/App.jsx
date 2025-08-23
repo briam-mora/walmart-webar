@@ -12,6 +12,7 @@ import './aframe/ScaleAnimator.jsx';
 import './aframe/HoverAnimator.jsx';
 import './aframe/GLTFMaterialFix.jsx';
 import './aframe/VideoBackground.jsx';
+import './aframe/PerformanceOptimizer.jsx';
 import content from './content.json';
 import { DEFAULT_DISTANCE_FROM_USER } from './constants.js';
 import { AudioProvider } from './contexts/AudioContext.jsx';
@@ -240,10 +241,12 @@ export function App() {
         </div>}
         <a-scene loading-screen="dotsColor: #ffc21f; backgroundColor: #0071ce" 
                  device-orientation-permission-ui="allowButtonText: Permitir; denyButtonText: Denegar; deviceMotionMessage: Esta Web Inmersiva requiere acceso a los sensores de movimiento de tu dispositivo"
-                 renderer="alpha: false; antialias: false; premultipliedAlpha: true; logarithmicDepthBuffer: false; colorManagement: true; precision: medium; stencil: false; depth: true"
+                 renderer="alpha: false; antialias: false; premultipliedAlpha: true; logarithmicDepthBuffer: false; colorManagement: true; precision: medium; stencil: false; depth: true; powerPreference: low-power"
+                 webgl="antialias: false; alpha: false; depth: true; stencil: false; preserveDrawingBuffer: false; logarithmicDepthBuffer: false; powerPreference: low-power"
                  onerror="console.error('A-Frame error:', event.detail)"
                  embedded="true"
-                 video-bg>
+                 video-bg
+                 performance-optimizer="targetFPS: 30; reduceTextures: true; disableShadows: true; optimizeMaterials: true">
           <a-camera look-controls="reverseMouseDrag: true; mouseEnabled: true; touchEnabled: true" wasd-controls-enabled="false" position="0 0 0"></a-camera>
           <a-entity id="raycaster" raycaster="objects: .clickable" cursor="rayOrigin: mouse"></a-entity>
 

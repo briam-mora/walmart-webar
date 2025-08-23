@@ -145,6 +145,24 @@ video {
   pointer-events: none;
 }
 
+/* Performance optimizations for older Android devices */
+@media (max-width: 768px) {
+  /* Reduce motion for better performance */
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  
+  /* Optimize canvas rendering */
+  canvas {
+    image-rendering: optimizeSpeed;
+    image-rendering: -moz-crisp-edges;
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: optimize-contrast;
+  }
+}
+
 /* Allow pointer events only for trivia videos when needed */
 .video-player {
   pointer-events: auto;
