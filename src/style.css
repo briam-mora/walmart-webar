@@ -120,6 +120,36 @@ a-video video {
   max-width: 100%;
 }
 
+/* Remove all video controls and UI elements */
+video::-webkit-media-controls,
+video::-webkit-media-controls-panel,
+video::-webkit-media-controls-play-button,
+video::-webkit-media-controls-start-playback-button,
+video::-webkit-media-controls-timeline,
+video::-webkit-media-controls-current-time-display,
+video::-webkit-media-controls-time-remaining-display,
+video::-webkit-media-controls-time-control,
+video::-webkit-media-controls-volume-slider,
+video::-webkit-media-controls-volume-slider-container,
+video::-webkit-media-controls-mute-button,
+video::-webkit-media-controls-fullscreen-button,
+video::-webkit-media-controls-rewind-button,
+video::-webkit-media-controls-return-to-realtime-button,
+video::-webkit-media-controls-seek-back-button,
+video::-webkit-media-controls-seek-forward-button {
+  display: none !important;
+}
+
+/* Remove controls for all video elements */
+video {
+  pointer-events: none;
+}
+
+/* Allow pointer events only for trivia videos when needed */
+.video-player {
+  pointer-events: auto;
+}
+
 .text-section {
   text-align: center;
   padding: 12px;

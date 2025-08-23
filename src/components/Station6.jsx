@@ -67,7 +67,6 @@ const Station6 = () => {
           <div className="video-section">
             <video 
               className="video-player"
-              controls
               autoPlay={false}
               muted={false}
               playsInline

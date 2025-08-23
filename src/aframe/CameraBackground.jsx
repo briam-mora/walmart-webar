@@ -108,6 +108,8 @@ AFRAME.registerComponent('camera-background', {
         this.video.setAttribute('autoplay', true);
         this.video.setAttribute('muted', true);
         this.video.setAttribute('loop', true);
+        this.video.setAttribute('controls', false);
+        this.video.controls = false;
         
         // Wait for video to be ready
         this.video.addEventListener('loadedmetadata', () => {
@@ -156,6 +158,7 @@ AFRAME.registerComponent('camera-background', {
       position: fixed;
       top: 0;
       left: 0;
+      pointer-events: none;
     `;
 
     // Add video to background container

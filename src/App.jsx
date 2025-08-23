@@ -265,7 +265,7 @@ export function App() {
             <img id="prev" src="prev.png" crossOrigin="anonymous" preload="auto" />
             <img id="close" src="close.png" crossOrigin="anonymous" preload="auto" />
             <img id="cardback" src="cardback.png" crossOrigin="anonymous" preload="auto" />
-            <video id="video" src="video.mp4" autoPlay={false} loop={false} preload="metadata"></video>
+            <video id="video" src="video.mp4" autoPlay={false} loop={false} preload="metadata" controls={false}></video>
             <audio id="click" src="click.wav" preload="auto"></audio>
             {content.audios.station_2.map(audio => <audio key={audio.id} id={audio.id} src={audio.src} preload="none"></audio>)}
             {content.audios.station_3.map(audio => <audio key={audio.id} id={audio.id} src={audio.src} preload="none"></audio>)}
