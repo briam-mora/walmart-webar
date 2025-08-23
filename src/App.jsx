@@ -11,7 +11,7 @@ import Station7 from './components/Station7.jsx';
 import './aframe/ScaleAnimator.jsx';
 import './aframe/HoverAnimator.jsx';
 import './aframe/GLTFMaterialFix.jsx';
-import './aframe/CameraBackground.jsx';
+import './aframe/VideoBackground.jsx';
 import content from './content.json';
 import { DEFAULT_DISTANCE_FROM_USER } from './constants.js';
 import { AudioProvider } from './contexts/AudioContext.jsx';
@@ -240,10 +240,11 @@ export function App() {
         </div>}
         <a-scene loading-screen="dotsColor: #ffc21f; backgroundColor: #0071ce" 
                  device-orientation-permission-ui="allowButtonText: Permitir; denyButtonText: Denegar; deviceMotionMessage: Esta Web Inmersiva requiere acceso a los sensores de movimiento de tu dispositivo"
-                 renderer="alpha: true; antialias: false; premultipliedAlpha: true; logarithmicDepthBuffer: false; colorManagement: true; precision: mediump"
+                 renderer="alpha: false; antialias: false; premultipliedAlpha: true; logarithmicDepthBuffer: false; colorManagement: true; precision: mediump"
                  onerror="console.error('A-Frame error:', event.detail)"
-                 embedded="true">
-          <a-camera camera-background look-controls="reverseMouseDrag: true; mouseEnabled: true; touchEnabled: true" wasd-controls-enabled="false" position="0 0 0"></a-camera>
+                 embedded="true"
+                 video-bg>
+          <a-camera look-controls="reverseMouseDrag: true; mouseEnabled: true; touchEnabled: true" wasd-controls-enabled="false" position="0 0 0"></a-camera>
           <a-entity id="raycaster" raycaster="objects: .clickable" cursor="rayOrigin: mouse"></a-entity>
 
           {/* Load assets */}
