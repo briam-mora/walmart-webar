@@ -240,10 +240,6 @@ export function App() {
         </div>}
         <a-scene loading-screen="dotsColor: #ffc21f; backgroundColor: #0071ce" 
                  device-orientation-permission-ui="allowButtonText: Permitir; denyButtonText: Denegar; deviceMotionMessage: Esta Web Inmersiva requiere acceso a los sensores de movimiento de tu dispositivo"
-                 renderer="precision: medium; antialias: false; alpha: false; stencil: false; depth: true; logarithmicDepthBuffer: false"
-                 webgl="antialias: false; alpha: false; depth: true; stencil: false; preserveDrawingBuffer: false; logarithmicDepthBuffer: false; powerPreference: default; failIfMajorPerformanceCaveat: false"
-                 onerror="console.error('A-Frame error:', event.detail)"
-                 embedded="true"
                  video-bg>
           <a-camera look-controls="reverseMouseDrag: true; mouseEnabled: true; touchEnabled: true" wasd-controls-enabled="false" position="0 0 0"></a-camera>
           <a-entity id="raycaster" raycaster="objects: .clickable" cursor="rayOrigin: mouse"></a-entity>
