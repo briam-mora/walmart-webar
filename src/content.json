@@ -64,6 +64,7 @@
             {"id":"audio_suli", "src": "sounds/station_4/suli.mp3"},
             {"id":"audio_durabrand", "src": "sounds/station_4/durabrand.mp3"},
             {"id":"audio_win", "src": "sounds/station_4/win.mp3"},
+            {"id":"audio_lose", "src": "sounds/station_4/lose.mp3"},
             {"id":"audio_flip", "src": "sounds/station_4/flip.mp3"}
         ],
         "station_5": [

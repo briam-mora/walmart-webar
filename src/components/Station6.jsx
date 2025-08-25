@@ -33,7 +33,9 @@ const Station6 = () => {
     
     // Play win or lose sound
     if (isCorrect) {
-      playAudio('audio_win');
+      playAudio('audio_win', true);
+    } else {
+      playAudio('audio_lose', true);
     }
     
     // Show feedback after 3 seconds

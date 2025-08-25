@@ -84,6 +84,7 @@ const Station4 = ({ position }) => {
       const secondCard = updatedCards.find(c => c.id === secondId);
 
       if (firstCard.pairId === secondCard.pairId) {
+        playAudio('audio_win', true);
         // Match found!
         setMatchedPairs(prev => [...prev, firstCard.pairId]);
         setFlippedCards([]);
@@ -105,6 +106,7 @@ const Station4 = ({ position }) => {
           playAudio('audio_win', true);
         }
       } else {
+        playAudio('audio_lose', true);
         // No match, flip cards back after delay
         setTimeout(() => {
           setCards(prevCards => 
@@ -117,18 +119,6 @@ const Station4 = ({ position }) => {
         }, 1000);
       }
     }
-  };
-
-  // Reset game
-  const resetGame = () => {
-    const cardPairs = createCardPairs();
-    const shuffledCards = shuffleCards(cardPairs);
-    setCards(shuffledCards);
-    setFlippedCards([]);
-    setMatchedPairs([]);
-    setGameWon(false);
-    setVisibleWinImages([]);
-    setIsProcessing(false);
   };
 
   // Grid layout: 4 rows x 3 columns (12 cards total - 6 pairs)
