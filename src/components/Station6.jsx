@@ -81,7 +81,21 @@ const Station6 = () => {
             </video>
           </div>
         )}
-        
+        {/* Play Video Button - Shows initially */}
+        {!videoFinished && (
+          <button 
+            className="answer-button"
+            onClick={() => {
+              // Stop any playing audio using AudioContext
+              stopAllAudio();
+              
+              const video = document.querySelector('.video-player');
+              if (video) video.play();
+            }}
+          >
+            Reproducir video
+          </button>
+        )}
         {/* Question or Feedback */}
         <div className="text-section">
           {!showFeedback ? (
@@ -122,22 +136,6 @@ const Station6 = () => {
           )}
         </div>
         
-        {/* Play Video Button - Shows initially */}
-        {!videoFinished && (
-          <button 
-            className="answer-button"
-            onClick={() => {
-              // Stop any playing audio using AudioContext
-              stopAllAudio();
-              
-              const video = document.querySelector('.video-player');
-              if (video) video.play();
-            }}
-          >
-            Reproducir video
-          </button>
-        )}
-        
                   {/* Answer Button - Shows after video finishes */}
           {videoFinished && !answered && (
             <button 
@@ -145,7 +143,7 @@ const Station6 = () => {
               onClick={handleSubmitAnswer}
               disabled={selectedAnswer === null}
             >
-              Contestar
+              Enviar respuesta
             </button>
           )}
         
