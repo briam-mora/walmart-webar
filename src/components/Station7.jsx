@@ -31,7 +31,7 @@ const Station7 = () => {
       setIsUpdating(true);
       
       // Your Google Apps Script endpoint
-      const scriptUrl = 'https://script.google.com/macros/s/AKfycbz5cAndrRvlRaVDuOmBS6-BJwCFeIKaCr8fQX650-vaWjfI2U6CqqwX6a9frWqjATbn/exec';
+      const scriptUrl = 'https://script.google.com/macros/s/AKfycbzIvGjK4sjBEBd_brZlPB1Vk4oANw_F5c85B1-_CKLAoF9R_REGjCD0bfnVPGhUUSNp/exec';
       
       const response = await fetch(scriptUrl, {
         method: 'POST',
