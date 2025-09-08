@@ -5,8 +5,7 @@
         {"id":"rules3", "src": "regla2.png"},
         {"id":"rules4", "src": "regla3.png"},
         {"id":"rules5", "src": "regla4.png"},
-        {"id":"rules_end", "src": "regla_reflex.png"},
-        {"id":"memory_instructions", "src": "images/station_4/memory_instructions.png"}
+        {"id":"rules_end", "src": "regla_reflex.png"}
     ],
     "memory": [
         {"id":"card1", "src": "suli.png", "sound_id": "audio_suli"},
@@ -22,7 +21,8 @@
         {"id":"card3_win", "src": "Mainstays_win.png"},
         {"id":"card4_win", "src": "greatValue_win.png"},
         {"id":"card5_win", "src": "durabrand_win.png"},
-        {"id":"card6_win", "src": "Boulevard_win.png"}
+        {"id":"card6_win", "src": "Boulevard_win.png"},
+        {"id":"memory_instructions", "src": "images/station_4/memory_instructions.png"}
     ],
     "globos": [
         {"id":"globo_1_card", "src": "images/station_2/Disfrute.png"},

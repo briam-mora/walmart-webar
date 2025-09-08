@@ -14,9 +14,9 @@ const Station1 = ({ position }) => {
       />
       <a-image
           src="marco.png"
-          position="0.005 0.045 0.05"
+          position="0.005 0.044 0.05"
           rotation="0 0 0"
-          scale="0.95 1.76 1"
+          scale="0.95 1.75 1"
         />
     </a-entity>
   );
