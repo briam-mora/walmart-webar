@@ -489,6 +489,8 @@ video {
   margin: 15px 0;
 }
 
+
+
 .feedback-summary p {
   margin: 8px 0;
   color: #1e40af;
@@ -594,6 +596,14 @@ video {
     gap: 18px;
     width: 100%;
     max-width: 300px;
+  }
+  
+  .feedback-summary {
+    max-width: 70%;
+  }
+
+  .reset-button {
+    max-width: 70%;
   }
   
   .input-group label {
