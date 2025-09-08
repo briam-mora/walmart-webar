@@ -123,7 +123,7 @@ const Station7 = () => {
       onClick={() => onClick(questionNumber, value)}
     >
       <img 
-        src={`${value}.svg`} 
+        src={`${value}.png`} 
         alt={getFeedbackLabel(value)}
         className="feedback-icon"
       />
@@ -141,8 +141,8 @@ const Station7 = () => {
           </div>
           
           <div className="feedback-summary">
-            <p>Has completado el proceso de onboarding. Tus respuestas se han guardado en Google Drive.</p>
-            <p>Ya puedes cerrar la aplicación o volver a iniciar el proceso de onboarding.</p>
+            <p>Has completado el proceso de onboarding.</p>
+            <p>Ya puedes cerrar la aplicación, o volver a iniciar el proceso de onboarding.</p>
           </div>
           
           <button className="reset-button" onClick={handleReset}>

@@ -48,22 +48,28 @@ const VideoGallery = ({ videos, position, rotation, scale, closeFunction, width,
     }
   }, [stopVideo]);
 
+  // Separate useEffect for video changes only
   useEffect(() => {
-    // Ensure the video is loaded and set up
     const videoElement = document.querySelector(videos[currentIndex].src);
     if (videoElement) {
       videoRef.current = videoElement;
-      videoElement.currentTime = 0;
+      videoElement.currentTime = 0; // Reset only when changing videos
       videoElement.removeAttribute("loop");
-      // Only autoplay if user has interacted with the page
+    }
+  }, [currentIndex]);
+
+  // Separate useEffect for play/pause control
+  useEffect(() => {
+    if (videoRef.current) {
       if (playing) {
-        videoElement.play().catch(error => {
-          // Silently handle autoplay failure
+        videoRef.current.play().catch(error => {
           console.log('Autoplay blocked:', error.message);
         });
+      } else {
+        videoRef.current.pause();
       }
     }
-  }, [currentIndex, playing]);
+  }, [playing]);
 
   // Cleanup function to stop video when component unmounts
   useEffect(() => {

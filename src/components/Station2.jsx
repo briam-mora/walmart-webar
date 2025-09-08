@@ -46,17 +46,28 @@ const Station2 = ({ position }) => {
 
   return (
     <a-entity id="station-2" position={position} scale="1 1 1">
+      <a-entity position="0 1.5 0" scale="0.5 0.5 0.5">
+        <a-plane
+          src='#prodi_instructions'
+          position="0 0 0"
+          width="1.5"
+          height="0.5"
+          class="clickable"
+          material="shader: flat"
+          transparent="true"
+        />
+      </a-entity>
       {/* Card Display */}
       {showCard && (
         <a-entity
           id="card-display"
-          position="0 0.5 -0.1"
-          scale="0.5 0.5 0.5"
+          position="0 0 -0.1"
+          scale="0.8 0.8 0.8"
         >
           <a-plane
             src={`#${currentCard}`}
             position="0 0 0"
-            width="2.2"
+            width="1.5"
             height="1"
             class="clickable"
             material="shader: flat"
@@ -70,50 +81,52 @@ const Station2 = ({ position }) => {
         position="0 0 0"
         scale="1 1 1"
       >
-        <a-entity
-          class="clickable"
-          gltf-model="GloboDisfrute.glb"
-          position="0.3 1 0"
-          rotation="0 0 0"
-          scale="0.1 0.1 0.1"
-          hover-animator="duration: 2000; easing: easeInOutQuad; delay: 200;"
-          onClick={() => playBalloonAudio('globo_1')}
-        />
-        <a-entity
-          class="clickable"
-          gltf-model="GloboInclusion.glb"
-          position="0.6 1 0"
-          rotation="0 0 0"
-          scale="0.1 0.1 0.1"
-          hover-animator="duration: 2000; easing: easeInOutQuad; delay: 800;"
-          onClick={() => playBalloonAudio('globo_2')}
-        />
-        <a-entity
-          class="clickable"
-          gltf-model="GloboOportunidad.glb"
-          position="0 1 0"
-          rotation="0 0 0"
-          scale="0.1 0.1 0.1"
-          hover-animator="duration: 2000; easing: easeInOutQuad; delay: 1500;"
-          onClick={() => playBalloonAudio('globo_3')}
-        />
+        {/* Top row - 3 globes: Proposito, Reto, Oportunidades */}
         <a-entity
           class="clickable"
           gltf-model="GloboProposito.glb"
-          position="-0.6 1 0"
+          position="-0.4 1 0"
           rotation="0 0 0"
-          scale="0.1 0.1 0.1"
+          scale="0.12 0.12 0.12"
           hover-animator="duration: 2000; easing: easeInOutQuad; delay: 300;"
           onClick={() => playBalloonAudio('globo_4')}
         />
         <a-entity
           class="clickable"
           gltf-model="GloboReto.glb"
-          position="-0.3 1 0"
+          position="0 1 0"
           rotation="0 0 0"
-          scale="0.1 0.1 0.1"
+          scale="0.12 0.12 0.12"
           hover-animator="duration: 2000; easing: easeInOutQuad; delay: 1200;"
           onClick={() => playBalloonAudio('globo_5')}
+        />
+        <a-entity
+          class="clickable"
+          gltf-model="GloboOportunidad.glb"
+          position="0.4 1 0"
+          rotation="0 0 0"
+          scale="0.12 0.12 0.12"
+          hover-animator="duration: 2000; easing: easeInOutQuad; delay: 1500;"
+          onClick={() => playBalloonAudio('globo_3')}
+        />
+        {/* Bottom row - 2 globes: Disfrute, Inclusion */}
+        <a-entity
+          class="clickable"
+          gltf-model="GloboDisfrute.glb"
+          position="-0.2 0.6 0"
+          rotation="0 0 0"
+          scale="0.12 0.12 0.12"
+          hover-animator="duration: 2000; easing: easeInOutQuad; delay: 200;"
+          onClick={() => playBalloonAudio('globo_1')}
+        />
+        <a-entity
+          class="clickable"
+          gltf-model="GloboInclusion.glb"
+          position="0.2 0.6 0"
+          rotation="0 0 0"
+          scale="0.12 0.12 0.12"
+          hover-animator="duration: 2000; easing: easeInOutQuad; delay: 800;"
+          onClick={() => playBalloonAudio('globo_2')}
         />
       </a-entity>
     </a-entity>

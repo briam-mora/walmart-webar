@@ -1,6 +1,5 @@
 import 'aframe';
 import React, { useState, useEffect } from 'react';
-import Station0 from './components/Station0.jsx';
 import Station1 from './components/Station1.jsx';
 import Station2 from './components/Station2.jsx';
 import Station3 from './components/Station3.jsx';

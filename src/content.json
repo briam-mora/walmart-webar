@@ -5,7 +5,8 @@
         {"id":"rules3", "src": "regla2.png"},
         {"id":"rules4", "src": "regla3.png"},
         {"id":"rules5", "src": "regla4.png"},
-        {"id":"rules_end", "src": "regla_reflex.png"}
+        {"id":"rules_end", "src": "regla_reflex.png"},
+        {"id":"memory_instructions", "src": "images/station_4/memory_instructions.png"}
     ],
     "memory": [
         {"id":"card1", "src": "suli.png", "sound_id": "audio_suli"},
@@ -29,7 +30,8 @@
         {"id":"globo_3_card", "src": "images/station_2/Oportunidad.png"},
         {"id":"globo_4_card", "src": "images/station_2/Proposito.png"},
         {"id":"globo_5_card", "src": "images/station_2/Reto.png"},
-        {"id":"inicio_card", "src": "images/station_2/Prodi.png"}
+        {"id":"inicio_card", "src": "images/station_2/Prodi.png"},
+        {"id":"prodi_instructions", "src": "images/station_2/prodi_instructions.png"}
     ],
     "plataforma": [
         {"id":"plataforma_1", "src": "images/station_5/Plataformas.png"},
@@ -113,7 +115,7 @@
                 "Como una guía de liderazgo operativo.", 
                 "Como nuestros valores en acción."], 
             "correct_option": 2,
-            "correct_option_text": "¡Correcto! Definimos la cultura como nuestros valores en acción.\n\nBuscamos ofrecer un excelente servicio al cliente, un buen ambiente laboral y un alto desempeño para cumplir con nuestro propósito de ahorrar dinero a las personas para que puedan vivir mejor."
+            "correct_option_text": "Definimos la cultura como nuestros valores en acción.\n\nBuscamos ofrecer un excelente servicio al cliente, un buen ambiente laboral y un alto desempeño para cumplir con nuestro propósito de ahorrar dinero a las personas para que puedan vivir mejor."
         },
         {
             "id":"trivia_2", 
@@ -126,7 +128,7 @@
                 "Escuchar, anticipar y atender las necesidades del cliente", 
                 "Enfocarse solo en resultados internos"], 
             "correct_option": 1,
-            "correct_option_text": "¡Correcto! ¡Recuerda! El cliente es primero: Siempre escucha, anticipa y atiende las necesidades de los clientes y clientas."
+            "correct_option_text": "¡Recuerda! El cliente es primero: Siempre escucha, anticipa y atiende las necesidades de los clientes y clientas."
         },
         {
             "id":"trivia_3", 
@@ -139,7 +141,7 @@
                 "Colaborar con otros, escucha y aceptar las diferencias, ideas y experiencias.", 
                 "Delegar tareas sin explicar cómo hacerlas"], 
             "correct_option": 1,
-            "correct_option_text": "¡Correcto! El respeto por el individuo implica colaborar con otros y estar abierto a la retroalimentación, además de escuchar y aceptar las diferencias, ideas y experiencias de todos y todas. ¡Siempre lidera con el ejemplo!"
+            "correct_option_text": "El respeto por el individuo implica colaborar con otros y estar abierto a la retroalimentación, además de escuchar y aceptar las diferencias, ideas y experiencias de todos y todas. ¡Siempre lidera con el ejemplo!"
         },
         {
             "id":"trivia_4", 
@@ -152,7 +154,7 @@
                 "Trabajar con mi propia estrategia sin consultar a nadie.", 
                 "Delegar todo mi trabajo."], 
             "correct_option": 0,
-            "correct_option_text": "¡Correcto! Luchar por la excelencia significa mantener un alto nivel de desempeño, estableciendo y alcanzando nuestros objetivos, asumiendo la responsabilidad de nuestras acciones, celebrando los logros y tomando decisiones estratégicas que impulsen el éxito."
+            "correct_option_text": "Luchar por la excelencia significa mantener un alto nivel de desempeño, estableciendo y alcanzando nuestros objetivos, asumiendo la responsabilidad de nuestras acciones, celebrando los logros y tomando decisiones estratégicas que impulsen el éxito."
         },
         {
             "id":"trivia_5", 
@@ -165,7 +167,7 @@
                 "Decir la verdad, ser transparente y tener valentía para hacer lo correcto", 
                 "Aceptar todo tipo de negociación, aunque no cumpla con las políticas de la compañía."], 
             "correct_option": 1,
-            "correct_option_text": "¡Correcto! Actuar con integridad significa cumplir con las políticas y leyes, decir la verdad, ser transparente y tener valentía para hacer lo correcto."
+            "correct_option_text": "Actuar con integridad significa cumplir con las políticas y leyes, decir la verdad, ser transparente y tener valentía para hacer lo correcto."
         }
     ]
 }

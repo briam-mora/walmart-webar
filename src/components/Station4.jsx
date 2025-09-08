@@ -137,6 +137,18 @@ const Station4 = ({ position }) => {
   return (
     <a-entity id="station-4" position={position}>
 
+       <a-entity position="0 1.75 0" scale="0.5 0.5 0.5">
+         <a-plane
+           src='#memory_instructions'
+           position="0 0 0"
+           width="2.5"
+           height="0.5"
+           class="clickable"
+           material={`shader: flat; color: ${visibleWinImages.length > 0 ? '#666666' : '#ffffff'}`}
+           transparent="true"
+         />
+       </a-entity>
+
       {/* Memory Cards Grid */}
       {cards.map((card, index) => {
         const pos = getCardPosition(index);
@@ -154,7 +166,7 @@ const Station4 = ({ position }) => {
                 height="0.8"
                 class={isClickable ? "clickable" : ""}
                 onClick={isClickable ? () => handleCardClick(card.id) : undefined}
-                material={`shader: flat; opacity: ${isClickable ? 1 : 0.5}`}
+                material={`shader: flat; color: ${isClickable ? '#ffffff' : '#666666'}`}
                 transparent="true"
               />
             )}
@@ -166,7 +178,7 @@ const Station4 = ({ position }) => {
                 position="0 0 0.01"
                 width="0.6"
                 height="0.8"
-                material="shader: flat"
+                material={`shader: flat; color: ${visibleWinImages.length > 0 ? '#666666' : '#ffffff'}`}
                 transparent="true"
               />
             )}
