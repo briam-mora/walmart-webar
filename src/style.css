@@ -580,7 +580,7 @@ video {
   
   .feedback-icon {
     width: 45px;
-    height: 45px;
+    height: 55px;
   }
   
   .feedback-label {
@@ -590,6 +590,14 @@ video {
   .feedback-question h3 {
     font-size: 15px;
     margin-bottom: 10px;
+  }
+
+  .feedback-summary {
+    max-width: 70%;
+  }
+
+  .reset-button {
+    max-width: 77%;
   }
   
   .feedback-form {
