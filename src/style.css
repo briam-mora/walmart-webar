@@ -247,13 +247,13 @@ video {
 
 .checkmark {
   color: #1e3a8a;
-  font-size: 14px;
+  font-size: 16px;
   font-weight: bold;
 }
 
 .option-text {
   color: #ffffff;
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 500;
   text-align: left;
   flex: 1;
@@ -432,7 +432,7 @@ video {
 
 .input-group label {
   color: #1e40af;
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 600;
 }
 
@@ -440,9 +440,9 @@ video {
   background: #1e40af;
   border: none;
   border-radius: 8px;
-  padding: 10px 14px;
+  padding: 10px 16px;
   color: white;
-  font-size: 14px;
+  font-size: 16px;
   transition: all 0.3s ease;
 }
 
@@ -494,7 +494,7 @@ video {
 .feedback-summary p {
   margin: 8px 0;
   color: #1e40af;
-  font-size: 14px;
+  font-size: 16px;
 }
 
 .reset-button {
@@ -503,7 +503,7 @@ video {
   border: none;
   border-radius: 8px;
   padding: 10px 20px;
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
@@ -598,14 +598,6 @@ video {
     max-width: 300px;
   }
   
-  .feedback-summary {
-    max-width: 70%;
-  }
-
-  .reset-button {
-    max-width: 77%;
-  }
-  
   .input-group label {
     font-size: 13px;
   }
@@ -678,7 +670,7 @@ video {
   }
   
   .option-item {
-    padding: 10px 14px;
+    padding: 10px 16px;
   }
   
   .option-text {
