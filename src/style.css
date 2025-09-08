@@ -418,7 +418,7 @@ video {
 
 .feedback-label {
   color: #000;
-  font-size: 13px;
+  font-size: 16px;
   font-weight: 500;
   text-align: center;
   margin-top: 4px;
@@ -588,7 +588,7 @@ video {
   }
   
   .feedback-question h3 {
-    font-size: 15px;
+    font-size: 16px;
     margin-bottom: 10px;
   }
 
@@ -607,17 +607,17 @@ video {
   }
   
   .input-group label {
-    font-size: 13px;
+    font-size: 16px;
   }
   
   .feedback-input {
     padding: 8px 12px;
-    font-size: 13px;
+    font-size: 16px;
   }
   
   .submit-button {
     padding: 10px 20px;
-    font-size: 15px;
+    font-size: 16px;
   }
   
   /* Ensure banner fits mobile screen */
@@ -682,7 +682,7 @@ video {
   }
   
   .option-text {
-    font-size: 13px;
+    font-size: 16px;
   }
   
   .answer-button, .next-button {
@@ -703,7 +703,7 @@ video {
   }
   
   .feedback-body {
-    font-size: 13px;
+    font-size: 16px;
   }
   
   .video-section {
