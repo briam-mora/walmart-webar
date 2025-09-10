@@ -83,7 +83,7 @@ a-video video {
   width: 400px;
   max-width: 95vw;
   position: fixed !important;
-  top: 50% !important;
+  top: 45% !important;
   left: 50% !important;
   transform: translate(-50%, -50%) !important;
   pointer-events: auto;
@@ -106,7 +106,6 @@ a-video video {
   justify-content: center;
   align-items: center;
   width: 100%;
-  min-height: 120px;
   max-width: 100%;
 }
 
@@ -634,18 +633,18 @@ video {
   .station-6 {
     width: 100vw;
     max-width: 100vw;
-    height: 100vh;
+    height: calc(100vh - 80px);
     top: 0 !important;
     left: 0 !important;
     transform: none !important;
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     justify-content: center;
+    overflow-y: auto;
   }
   
   .trivia-container {
     padding: 12px;
-    padding-top: 25px;
     width: 100%;
     height: 100%;
     border-radius: 0;
@@ -704,10 +703,6 @@ video {
   
   .feedback-body {
     font-size: 16px;
-  }
-  
-  .video-section {
-    padding: 8px;
   }
   
   .text-section {
