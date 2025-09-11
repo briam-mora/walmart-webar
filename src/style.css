@@ -640,7 +640,6 @@ video {
     display: flex;
     align-items: flex-start;
     justify-content: center;
-    overflow-y: auto;
   }
   
   .trivia-container {
@@ -673,7 +672,7 @@ video {
   }
   
   .question-text {
-    font-size: 2vh;
+    font-size: 1.8vh;
     margin-bottom: 0.5rem;
   }
   
@@ -686,12 +685,12 @@ video {
   }
   
   .option-text {
-    font-size: 2vh;
+    font-size: 1.8vh;
   }
   
   .answer-button, .next-button {
     padding: 12px 24px;
-    font-size: 2vh;
+    font-size: 1.8vh;
     width: 100%;
     max-width: none;
   }
@@ -702,12 +701,12 @@ video {
   }
   
   .station-6 .feedback-title {
-    font-size: 2vh;
+    font-size: 1.8vh;
     margin-bottom: 12px;
   }
   
   .station-6 .feedback-body {
-    font-size: 2vh;
+    font-size: 1.8vh;
   }
   
   .text-section {
